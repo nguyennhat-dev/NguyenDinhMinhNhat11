@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCR PRO – Baccarat AI</title>
+<style>
+body{margin:0;font-family:system-ui;background:#0b1220;color:#e5e7eb}
+header{padding:12px 16px;background:#0f172a;display:flex;justify-content:space-between}
+.btn{background:#f59e0b;color:#111;border:none;border-radius:8px;padding:8px 12px;font-weight:700}
+.container{padding:12px}
+.table-card{background:#0f172a;border-radius:14px;margin-bottom:14px}
+.table-head{display:flex;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #1f2937}
+.grid{display:grid;grid-template-columns:repeat(20,30px);gap:4px;background:#fff;padding:8px;border-radius:10px}
+.cell{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+.B{background:#3b82f6}.P{background:#ef4444}.T{background:#22c55e}
+.ai{padding:10px 12px;border-top:1px solid #1f2937;display:flex;justify-content:space-between}
+.good{color:#22c55e}.bad{color:#ef4444}
+</style>
+</head>
+<body>
+<header>
+<h3>BCR PRO • Baccarat AI</h3>
+<button class="btn" onclick="loadData()">Bắt đầu</button>
+</header>
+<div class="container" id="tables">Nhấn Bắt đầu</div>
+
+<script>
+const API = '/api/sexy';
+
+function stats(a){const s={B:0,P:0,T:0};a.forEach(x=>s[x]++);return s;}
+function parse(s){return s.split('').filter(x=>['B','P','T'].includes(x));}
+
+function predict(arr){
+ const last=arr.slice(-5);
+ const s=stats(last);
+ let votes={B:0,P:0};
+ votes[s.B>=s.P?'B':'P']++;
+ votes[arr[arr.length-1]]++;
+ votes[arr[arr.length-1]=='B'?'P':'B']++;
+ const pick=votes.B>=votes.P?'B':'P';
+ const conf=Math.max(votes.B,votes.P)/3*100;
+ return {pick,conf:conf.toFixed(0)};
+}
+
+async function loadData(){
+ const root=document.getElementById('tables');
+ root.innerHTML='Đang tải...';
+ const r=await fetch(API);
+ const data=await r.json();
+ root.innerHTML='';
+ data.forEach(t=>{
+  const arr=parse(t.ket_qua);
+  const ai=predict(arr);
+  const card=document.createElement('div');
+  card.className='table-card';
+  card.innerHTML=`<div class="table-head"><b>Bàn ${t.ban}</b><span>${t.cau||''}</span></div>
+  <div class="grid"></div>
+  <div class="ai"><span>Dự đoán</span><b class="${ai.pick=='B'?'good':'bad'}">${ai.pick} ${ai.conf}%</b></div>`;
+  const g=card.querySelector('.grid');
+  arr.forEach(x=>{const c=document.createElement('div');c.className='cell '+x;c.textContent=x;g.appendChild(c);});
+  root.appendChild(card);
+ });
+}
+</script>
+</body>
+</html>
