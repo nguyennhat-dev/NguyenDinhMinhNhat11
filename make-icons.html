@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tạo icon · Nguyễn Nhật</title>
+<style>
+:root{--bg:#0d111d;--card:#141a2a;--line:#262d45;--text:#eef0f6;--dim:#8d93a8;--acc:#f0b254}
+*{box-sizing:border-box}
+body{margin:0;padding:24px 16px 40px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
+main{max-width:720px;margin:0 auto;display:grid;gap:18px}
+h1{margin:0;font-size:1.4rem}
+p{margin:0;color:var(--dim);line-height:1.5}
+.grid{display:flex;flex-wrap:wrap;gap:14px}
+figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:8px;justify-items:center}
+figure canvas{border-radius:8px;background:repeating-conic-gradient(#1b2236 0 25%,#141a2a 0 50%) 0 0/16px 16px}
+figcaption{font-size:.85rem;color:var(--dim);text-align:center;max-width:150px}
+button{font:inherit;color:var(--text);background:transparent;border:1px solid var(--line);border-radius:999px;padding:10px 18px;min-height:44px;cursor:pointer}
+button:hover{border-color:var(--acc)}
+button.main{background:var(--acc);border-color:var(--acc);color:#1a1306;font-weight:600}
+button:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+#st{color:var(--acc);min-height:1.4em}
+</style>
+</head>
+<body>
+<main>
+  <h1>Tạo icon cho Nguyễn Nhật</h1>
+  <p>Bấm nút bên dưới, trình duyệt sẽ tải về 5 file PNG đúng tên và kích thước. Nếu trình duyệt hỏi "cho phép tải nhiều file", hãy chọn Cho phép. <strong>Lưu tất cả vào thư mục <code>icons/</code></strong> (cạnh <code>icon.svg</code>).</p>
+  <div><button class="main" id="all">Tạo và tải tất cả</button></div>
+  <div id="st" role="status"></div>
+  <div class="grid" id="grid"></div>
+</main>
+<script>
+"use strict";
+/* Vẽ icon từ SVG nội tuyến: 5 thanh sóng nhạc đối xứng trên nền gradient */
+const BARS = [[100, 110], [168, 200], [236, 300], [304, 200], [372, 110]];   // [x, chiều cao]
+function iconSvg(rx) {
+  const bars = BARS.map(([x, h]) => '<rect x="' + x + '" y="' + (256 - h / 2) + '" width="40" height="' + h + '" rx="20"/>').join("");
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><defs>' +
+    '<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2340"/><stop offset="1" stop-color="#0d111d"/></linearGradient>' +
+    '<linearGradient id="bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd58a"/><stop offset="1" stop-color="#f0b254"/></linearGradient>' +
+    '<radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#f0b254" stop-opacity=".35"/><stop offset="1" stop-color="#f0b254" stop-opacity="0"/></radialGradient>' +
+    '</defs><rect width="512" height="512" rx="' + rx + '" fill="url(#bg)"/><circle cx="256" cy="256" r="190" fill="url(#glow)"/>' +
+    '<g fill="url(#bar)">' + bars + '</g></svg>';
+}
+/* rx = 0: nền kín toàn bộ (maskable và apple-touch-icon). Họa tiết nằm gọn trong hình tròn an toàn 80% ở giữa. */
+const ICONS = [
+  { file: "icon-192.png", size: 192, rx: 112, solid: false, desc: "Icon thường 192×192" },
+  { file: "icon-512.png", size: 512, rx: 112, solid: false, desc: "Icon thường 512×512" },
+  { file: "icon-maskable-512.png", size: 512, rx: 0, solid: true, desc: "Maskable 512×512 (nền kín)" },
+  { file: "apple-touch-icon.png", size: 180, rx: 0, solid: true, desc: "iPhone 180×180 (nền kín)" },
+  { file: "favicon-32.png", size: 32, rx: 112, solid: false, desc: "Favicon 32×32" }
+];
+const $ = s => document.querySelector(s);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const toBlob = c => new Promise(res => c.toBlob(res, "image/png"));
+
+function drawIcon(item) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement("canvas");
+      c.width = c.height = item.size;
+      const g = c.getContext("2d");
+      if (item.solid) { g.fillStyle = "#0d111d"; g.fillRect(0, 0, item.size, item.size); }   // đảm bảo không trong suốt
+      g.drawImage(img, 0, 0, item.size, item.size);
+      resolve(c);
+    };
+    img.onerror = () => reject(new Error("Không vẽ được " + item.file));
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(iconSvg(item.rx));
+  });
+}
+async function save(item) {
+  const blob = await toBlob(item.canvas);
+  const a = document.createElement("a"), u = URL.createObjectURL(blob);
+  a.href = u; a.download = item.file; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(u), 4000);
+}
+async function init() {
+  const grid = $("#grid");
+  for (const item of ICONS) {
+    try { item.canvas = await drawIcon(item); } catch (e) { $("#st").textContent = e.message; continue; }
+    const fig = document.createElement("figure"), cap = document.createElement("figcaption"), b = document.createElement("button");
+    item.canvas.style.width = Math.max(64, Math.min(item.size, 128)) + "px";
+    item.canvas.style.height = item.canvas.style.width;
+    cap.textContent = item.file + " · " + item.desc;
+    b.textContent = "Tải file này"; b.onclick = () => save(item);
+    fig.append(item.canvas, cap, b); grid.appendChild(fig);
+  }
+}
+$("#all").onclick = async e => {
+  const btn = e.currentTarget; btn.disabled = true;
+  let n = 0;
+  for (const item of ICONS) {
+    if (!item.canvas) continue;
+    $("#st").textContent = "Đang tải " + item.file + " (" + (++n) + "/" + ICONS.length + ")...";
+    await save(item); await sleep(600);              // giãn cách để trình duyệt không chặn tải nhiều file
+  }
+  $("#st").textContent = "Xong. Hãy lưu tất cả file PNG vào thư mục icons/.";
+  btn.disabled = false;
+};
+init();
+</script>
+</body>
+</html>
