@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d111d">
+<meta name="color-scheme" content="dark">
 <title>Nguyễn Nhật</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
@@ -14,15 +15,18 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Nguyễn Nhật">
 <style>
-/* ===== Biến thiết kế ===== */
+/* ===== Biến thiết kế (phong cách Apple Music / iOS, tối giản, giữ vàng hổ phách của Nguyễn Nhật) ===== */
 @property --hue{syntax:"<number>";inherits:true;initial-value:40}
-:root{--bg:#0d111d;--card:#141a2a;--card2:#1a2036;--line:#262d45;--text:#eef0f6;--dim:#8d93a8;--acc:#f0b254;--acc2:#ff8f6b;--ink:#1a1306;
---danger:#ff6b6b;--live:#ff4d4d;--ok:#4ade80;--violet:#6c5ce7;--r-sm:12px;--r-md:16px;--r-lg:22px;--r-xl:24px;--gap:16px;--pad:20px;
+:root{color-scheme:dark;--bg:#0b0b0e;--card:rgba(30,30,36,.74);--card2:rgba(60,60,70,.5);--fill:rgba(120,120,128,.24);--line:rgba(255,255,255,.1);
+--text:#f5f5f7;--dim:#9b9ba5;--acc:#f0b254;--acc2:#ff8f6b;--ink:#1a1306;--tint:rgba(240,178,84,.14);
+--danger:#ff6b6b;--live:#ff4d4d;--ok:#4ade80;--violet:#6c5ce7;--heart:#ff453a;--r-sm:12px;--r-md:16px;--r-lg:24px;--r-xl:28px;--gap:14px;--pad:20px;--kb:0px;
+--font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",Roboto,"Helvetica Neue",sans-serif;
 --st:env(safe-area-inset-top,0px);--sr:env(safe-area-inset-right,0px);--sb:env(safe-area-inset-bottom,0px);--sl:env(safe-area-inset-left,0px)}
 *{box-sizing:border-box;margin:0}
 html{-webkit-text-size-adjust:100%}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;min-height:100dvh;position:relative;overflow-x:hidden;
- padding:calc(16px + var(--st)) calc(16px + var(--sr)) calc(96px + var(--sb)) calc(16px + var(--sl))}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;min-height:100dvh;position:relative;overflow-x:hidden;letter-spacing:-.005em;
+ padding:calc(14px + var(--st)) calc(14px + var(--sr)) calc(40px + var(--sb)) calc(14px + var(--sl))}
+body.has-mini{padding-bottom:calc(112px + var(--sb))}
 body.noscroll{overflow:hidden}
 button{font:inherit;color:var(--text);cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 button:disabled{cursor:not-allowed}
@@ -30,65 +34,71 @@ button:disabled{cursor:not-allowed}
 .hidden{display:none!important}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* ===== Nền: hai quầng sáng + dải sóng chân trang ===== */
+/* ===== Nền: một quầng sáng đổi màu theo nhãn đĩa ===== */
 .bg-glow{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;transition:--hue .6s}
-.bg-glow::before,.bg-glow::after{content:"";position:absolute;width:70vmax;height:70vmax;border-radius:50%;filter:blur(80px);opacity:.28}
-.bg-glow::before{top:-30vmax;left:-25vmax;background:radial-gradient(circle,hsl(var(--hue) 85% 58%),transparent 65%)}
-.bg-glow::after{bottom:-30vmax;right:-25vmax;background:radial-gradient(circle,var(--violet),transparent 65%)}
-.wave-foot{position:fixed;left:0;right:0;bottom:0;height:90px;z-index:-1;pointer-events:none;overflow:hidden;opacity:.2}
-.wave-foot svg{position:absolute;bottom:0;left:0;width:200%;height:100%;animation:drift 18s linear infinite}
-.wave-foot svg+svg{animation-duration:28s;animation-direction:reverse;opacity:.7}
-@keyframes drift{to{transform:translateX(-50%)}}
+.bg-glow::before,.bg-glow::after{content:"";position:absolute;width:70vmax;height:70vmax;border-radius:50%;filter:blur(90px);opacity:.22}
+.bg-glow::before{top:-32vmax;left:-25vmax;background:radial-gradient(circle,hsl(var(--hue) 80% 55%),transparent 65%)}
+.bg-glow::after{bottom:-34vmax;right:-28vmax;background:radial-gradient(circle,var(--violet),transparent 65%)}
 
 /* ===== Bố cục ===== */
-.app{max-width:520px;margin:0 auto;display:grid;gap:var(--gap)}
+.app{max-width:520px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap)}
+.app>*{min-width:0}
 .col-l{display:grid;gap:var(--gap);align-content:start;min-width:0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--pad);display:grid;gap:18px;min-width:0}
+.card{background:var(--card);-webkit-backdrop-filter:blur(28px) saturate(160%);backdrop-filter:blur(28px) saturate(160%);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--pad);display:grid;gap:18px;min-width:0}
+@media(min-width:600px){.app{max-width:680px}}
 @media(min-width:900px){
- .app{max-width:1080px;grid-template-columns:minmax(0,420px) minmax(0,1fr);column-gap:20px;align-items:start}
- header.top{grid-column:1/-1}
- .col-l{position:sticky;top:calc(16px + var(--st));max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain}
- ul.list{max-height:70vh}
+ .app{max-width:1120px;grid-template-columns:minmax(0,420px) minmax(0,1fr);column-gap:20px;align-items:start}
+ header.top,.tip,.offline-bar{grid-column:1/-1}
+ .col-l{position:sticky;top:calc(14px + var(--st));max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px);overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain}
+ ul.list{max-height:68vh}
+ body.has-mini{padding-bottom:calc(40px + var(--sb))}
 }
 
 /* ===== Header ===== */
-header.top{display:flex;align-items:center;gap:10px}
+header.top{display:flex;align-items:center;gap:8px;padding:2px 2px 0}
 .brand{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
-.brand svg{width:32px;height:32px;flex:none}
-h1{font-size:1.3rem;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.clock{font-variant-numeric:tabular-nums;font-size:1.2rem;font-weight:300;color:var(--acc)}
-.iconbtn{position:relative;width:44px;height:44px;border-radius:50%;background:transparent;border:1px solid var(--line);display:grid;place-items:center;padding:0;flex:none}
+.brand svg{width:30px;height:30px;flex:none}
+h1{font-size:1.45rem;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clock{font-variant-numeric:tabular-nums;font-size:1rem;font-weight:400;color:var(--dim);flex:none}
+@media(max-width:430px){.clock{font-size:.85rem}header.top{gap:6px}#installBtn{padding:4px 10px}.brand{gap:8px}}
+.iconbtn{position:relative;width:44px;height:44px;border-radius:50%;background:var(--fill);border:0;display:grid;place-items:center;padding:0;flex:none}
 .iconbtn svg{width:22px;height:22px;fill:currentColor}
-.iconbtn:hover{border-color:var(--acc)}
-.iconbtn .dot{position:absolute;top:8px;right:9px;width:9px;height:9px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 2px var(--bg)}
-.snz{font-size:.8rem;font-variant-numeric:tabular-nums;color:var(--acc);border:1px solid var(--acc);border-radius:999px;padding:4px 10px;white-space:nowrap}
-.net{width:10px;height:10px;border-radius:50%;background:var(--ok);flex:none}
+.iconbtn:hover{background:rgba(120,120,128,.36)}
+.iconbtn .dot{position:absolute;top:9px;right:10px;width:9px;height:9px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 2px var(--bg)}
+.snz{font-size:.8rem;font-variant-numeric:tabular-nums;color:var(--acc);background:var(--tint);border-radius:999px;padding:5px 11px;white-space:nowrap}
+.net{width:9px;height:9px;border-radius:50%;background:var(--ok);flex:none}
 .net.off{background:#6b7189}
+.offline-bar{display:flex;gap:10px;align-items:center;border-radius:var(--r-md);background:rgba(255,159,10,.14);color:#ffd9a0;padding:11px 14px;font-size:.88rem;line-height:1.45}
 
 /* ===== Nút, pill, thanh trượt ===== */
-.pills{display:flex;flex-wrap:wrap;gap:10px}
-.pill{background:transparent;border:1px solid var(--line);border-radius:999px;padding:11px 18px;min-height:44px}
-.pill:hover{border-color:var(--acc)}
-.pill[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:var(--ink);font-weight:600}
-.pill.main{background:var(--acc);border-color:var(--acc);color:var(--ink);font-weight:600}
-.pill:disabled{opacity:.45}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:var(--fill);border:0;border-radius:999px;padding:10px 18px;min-height:44px;font-weight:500}
+.pill:hover{background:rgba(120,120,128,.36)}
+.pill[aria-pressed=true]{background:var(--acc);color:var(--ink);font-weight:600}
+.pill.main{background:var(--acc);color:var(--ink);font-weight:600}
+.pill:disabled,.pill[aria-disabled=true]{opacity:.4;pointer-events:none}
 .pill.sm{padding:6px 14px;min-height:36px;font-size:.88rem}
-.rowbtn{width:44px;height:44px;background:none;border:0;color:var(--dim);border-radius:10px;display:grid;place-items:center;padding:0;flex:none}
-.rowbtn:hover{color:var(--acc)}
-.rowbtn svg{width:18px;height:18px;fill:currentColor}
+.rowbtn{width:44px;height:44px;background:none;border:0;color:var(--dim);border-radius:50%;display:grid;place-items:center;padding:0;flex:none}
+.rowbtn:hover{color:var(--text);background:var(--fill)}
+.rowbtn:disabled{opacity:.3}
+.rowbtn svg{width:20px;height:20px;fill:currentColor}
+.heart svg path{fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.heart[aria-pressed=true],.rowbtn.heart-on{color:var(--heart)}
+.heart[aria-pressed=true] svg path,.rowbtn.heart-on svg path{fill:currentColor}
 input[type=range]{-webkit-appearance:none;appearance:none;flex:1;width:100%;height:44px;padding:19px 0;background-clip:content-box;border-radius:3px;cursor:pointer;outline:none;touch-action:pan-y;
- background-color:transparent;background-image:linear-gradient(to right,var(--acc) var(--p,0%),var(--line) var(--p,0%))}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:16px;border-radius:8px;background:#fff;box-shadow:0 1px 4px #0006}
-input[type=range]::-moz-range-thumb{width:26px;height:16px;border:0;border-radius:8px;background:#fff}
+ background-color:transparent;background-image:linear-gradient(to right,var(--acc) var(--p,0%),rgba(255,255,255,.16) var(--p,0%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:14px;border-radius:7px;background:#fff;box-shadow:0 1px 4px #0007}
+input[type=range]::-moz-range-thumb{width:22px;height:14px;border:0;border-radius:7px;background:#fff}
 input[type=range]:disabled{opacity:.35;cursor:not-allowed}
 .spin{border:3px solid #1a130633;border-top-color:var(--ink);border-radius:50%;animation:sp .8s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 
 /* ===== Thẻ trình phát ===== */
-.cover-wrap{position:relative;width:min(260px,100%);aspect-ratio:1;margin:12px auto 0}
-.glow{position:absolute;inset:-18px;border-radius:50%;background:radial-gradient(closest-side,hsl(var(--hue) 90% 60%/.7),transparent);filter:blur(10px);pointer-events:none;
- opacity:calc(.2 + var(--lv,0)*.6);transform:scale(calc(1 + var(--lv,0)*.08));transition:opacity .12s,transform .12s}
-.cover{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;box-shadow:0 12px 36px #0008;background:#090c14;animation:vspin 7s linear infinite}
+.player{overflow-x:clip}
+.cover-wrap{position:relative;width:min(250px,72%);aspect-ratio:1;margin:10px auto 0}
+.glow{position:absolute;inset:-14px;border-radius:50%;background:radial-gradient(closest-side,hsl(var(--hue) 90% 60%/.6),transparent);filter:blur(12px);pointer-events:none;
+ opacity:calc(.15 + var(--lv,0)*.5);transform:scale(calc(1 + var(--lv,0)*.07));transition:opacity .12s,transform .12s}
+.cover{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;box-shadow:0 16px 40px #0009;background:#090c14;animation:vspin 7s linear infinite}
 body.is-paused .cover{animation-play-state:paused}
 .cover svg{position:absolute;inset:0;width:100%;height:100%}
 .cover .ini{position:absolute;left:31%;top:31%;width:38%;height:38%;display:grid;place-items:center;font-size:2rem;font-weight:700;color:#fff;text-shadow:0 2px 8px #0006}
@@ -96,31 +106,33 @@ body.is-paused .cover{animation-play-state:paused}
 .tonearm{position:absolute;top:-9%;right:-17%;width:48%;pointer-events:none;transform-origin:80% 15%;transform:rotate(-26deg);transition:transform .7s ease;filter:drop-shadow(0 4px 6px #0007)}
 body:not(.is-paused) .tonearm{transform:rotate(4deg)}
 @keyframes vspin{to{transform:rotate(360deg)}}
-#viz{width:100%;height:72px;display:block}
-.info{text-align:center;min-width:0}
-.title{font-size:1.35rem;font-weight:650;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.sub{color:var(--dim);font-size:.92rem;margin-top:6px;min-height:1.3em;display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}
+#viz{width:100%;height:64px;display:block}
+.info{display:flex;align-items:center;gap:6px;min-width:0}
+.info-main{flex:1;min-width:0}
+.title{font-size:1.4rem;font-weight:700;letter-spacing:-.02em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sub{color:var(--dim);font-size:.95rem;margin-top:4px;min-height:1.3em;display:flex;gap:8px;justify-content:flex-start;align-items:center;flex-wrap:wrap}
 .sub .aux{font-size:.85rem;opacity:.85}
-.direct-tag{font-size:.72rem;border:1px solid var(--acc);color:var(--acc);border-radius:999px;padding:1px 8px}
+.direct-tag{font-size:.72rem;background:var(--tint);color:var(--acc);border-radius:999px;padding:2px 9px}
 .row{display:flex;align-items:center;gap:12px}
-.time{font-size:.95rem;color:var(--dim);font-variant-numeric:tabular-nums;min-width:38px}
-.livebadge{display:none;flex:1;justify-content:center;align-items:center;gap:8px;font-weight:700;letter-spacing:.12em;font-size:.9rem;color:#ffb3b3;order:-1}
+.time{font-size:.85rem;color:var(--dim);font-variant-numeric:tabular-nums;min-width:38px}
+.livebadge{display:none;flex:1;justify-content:center;align-items:center;gap:8px;font-weight:700;letter-spacing:.1em;font-size:.9rem;color:#ffb3b3;order:-1}
 .livebadge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--live);animation:blink 1.2s infinite}
 @keyframes blink{50%{opacity:.25}}
 .player.is-live .livebadge{display:flex}
 .player.is-live #cur,.player.is-live #dur{display:none}
 .player.is-live #seek{opacity:.35;pointer-events:none}
-.ctrl{justify-content:center;gap:14px}
-.round{width:52px;height:52px;border-radius:50%;background:transparent;border:1px solid var(--line);display:grid;place-items:center;padding:0;position:relative;flex:none}
+.ctrl{justify-content:center;gap:12px}
+.round{width:52px;height:52px;border-radius:50%;background:var(--fill);border:0;display:grid;place-items:center;padding:0;position:relative;flex:none}
 .round svg{width:22px;height:22px;fill:currentColor}
-.round:hover{border-color:var(--acc)}
-.round.sm{width:44px;height:44px}
+.round:hover{background:rgba(120,120,128,.36)}
+.round.sm{width:44px;height:44px;background:transparent}
 .big{width:72px;height:72px;background:var(--acc);border:0;color:var(--ink)}
+.big:hover{background:var(--acc)}
 .big svg{width:28px;height:28px}
 .big .spin{display:none;position:absolute;inset:-7px;width:auto;height:auto;border-color:#f0b25444;border-top-color:var(--acc)}
 .big.loading .spin{display:block}
-.mini{width:44px;height:44px}
-.mini[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:var(--ink)}
+.mini{width:44px;height:44px;background:transparent}
+.mini[aria-pressed=true]{background:var(--acc);color:var(--ink)}
 .mini:disabled{opacity:.35}
 .mini .one{position:absolute;right:7px;bottom:5px;font-size:.62rem;font-weight:700;display:none}
 .mini.one-on .one{display:block}
@@ -128,51 +140,56 @@ body:not(.is-paused) .tonearm{transform:rotate(4deg)}
 
 /* ===== Cài đặt thu gọn ===== */
 details.card{padding:0;gap:0}
-details>summary{list-style:none;cursor:pointer;padding:14px var(--pad);font-weight:600;display:flex;justify-content:space-between;align-items:center;min-height:52px}
+details>summary{list-style:none;cursor:pointer;padding:14px var(--pad);font-weight:600;display:flex;justify-content:space-between;align-items:center;min-height:54px}
 details>summary::-webkit-details-marker{display:none}
-details>summary::after{content:"";width:9px;height:9px;border-right:2px solid var(--dim);border-bottom:2px solid var(--dim);transform:rotate(45deg);transition:transform .2s}
+details>summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--dim);border-bottom:2px solid var(--dim);transform:rotate(45deg);transition:transform .2s}
 details[open]>summary::after{transform:rotate(-135deg)}
-.acc-body{padding:0 var(--pad) var(--pad);display:grid;gap:20px}
+.acc-body{padding:0 var(--pad) var(--pad);display:grid;gap:18px}
 .sec{display:grid;gap:12px}
 .sec h2{font-size:1rem;font-weight:600}
 .fld-row{display:flex;align-items:center;gap:12px}
-.fld-row output{min-width:48px;text-align:right;font-variant-numeric:tabular-nums;color:var(--dim)}
+.fld-row output{min-width:52px;text-align:right;font-variant-numeric:tabular-nums;color:var(--dim)}
 .keys{display:none;color:var(--dim);font-size:.85rem;line-height:1.9}
 @media(min-width:900px){.keys{display:block}}
-kbd{font:inherit;font-size:.78rem;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px;background:#0f1423}
+kbd{font:inherit;font-size:.78rem;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px;background:rgba(255,255,255,.06)}
+.eq-band{display:grid;grid-template-columns:64px 1fr 56px;align-items:center;gap:10px}
+.eq-band label{font-size:.88rem;color:var(--dim);font-variant-numeric:tabular-nums}
+.eq-band output{text-align:right;font-variant-numeric:tabular-nums;color:var(--dim);font-size:.88rem}
 
 /* ===== Thư viện ===== */
-.tabs{display:flex;gap:6px;background:#0f1423;border:1px solid var(--line);border-radius:999px;padding:4px}
-.tab{flex:1;min-height:44px;border:0;border-radius:999px;background:transparent;color:var(--dim);font-weight:600}
+.tabs{display:flex;gap:4px;background:rgba(120,120,128,.18);border-radius:999px;padding:4px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;min-height:40px;padding:0 16px;border:0;border-radius:999px;background:transparent;color:var(--dim);font-weight:600;font-size:.88rem;white-space:nowrap}
 .tab[aria-selected=true]{background:var(--acc);color:var(--ink)}
 .panel{display:grid;gap:14px}
 .panel[hidden]{display:none}
-.drop{border:2px dashed var(--line);border-radius:var(--r-md);padding:16px;text-align:center;color:var(--dim);transition:.15s;display:grid;gap:12px;justify-items:center}
-.drop.over{border-color:var(--acc);color:var(--text);background:var(--card2)}
+.drop{border:1.5px dashed rgba(255,255,255,.18);border-radius:var(--r-md);padding:16px;text-align:center;color:var(--dim);transition:.15s;display:grid;gap:12px;justify-items:center}
+.drop.over{border-color:var(--acc);color:var(--text);background:var(--tint)}
 .prog{display:none;width:100%;gap:8px;justify-items:center;color:var(--text)}
 .drop.busy .prog{display:grid}
-.bar{width:100%;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .15s}
+.bar{width:100%;height:6px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .15s}
 .search-wrap{position:relative}
-.input{width:100%;background:#0f1423;border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;color:var(--text);font:inherit;font-size:1rem;min-height:44px;outline:none;-webkit-appearance:none;appearance:none}
+.input{width:100%;background:rgba(118,118,128,.2);border:1px solid transparent;border-radius:var(--r-sm);padding:12px 14px;color:var(--text);font:inherit;font-size:1rem;min-height:44px;outline:none;-webkit-appearance:none;appearance:none}
 .input:focus{border-color:var(--acc)}
 .input::placeholder{color:var(--dim)}
 .input[aria-invalid=true]{border-color:var(--danger)}
+select.input{padding-right:28px}
 .search{border-radius:999px;padding:12px 46px 12px 18px}
 .search::-webkit-search-cancel-button{display:none}
 .search-clear{position:absolute;right:2px;top:50%;transform:translateY(-50%);width:44px;height:44px;background:none;border:0;color:var(--dim);display:grid;place-items:center}
-ul.list{list-style:none;padding:0;display:grid;gap:4px;max-height:60vh;overflow-y:auto;overscroll-behavior:contain;align-content:start}
-li.track{display:flex;align-items:center;gap:10px;padding:8px 10px;min-height:56px;border-radius:var(--r-sm);cursor:pointer}
-li.track:hover{background:#1b2236}
-li.track.on{background:#2a2416;color:var(--acc)}
-.thumb{width:40px;height:40px;border-radius:10px;flex:none;display:grid;place-items:center;font-weight:700;color:#fff;font-size:1rem;background:var(--card2)}
+ul.list{list-style:none;padding:0;display:grid;gap:2px;max-height:60vh;overflow-y:auto;overscroll-behavior:contain;align-content:start}
+li.track{display:flex;align-items:center;gap:10px;padding:8px 8px;min-height:60px;border-radius:var(--r-sm);cursor:pointer}
+li.track:hover{background:rgba(255,255,255,.06)}
+li.track.on{background:var(--tint);color:var(--acc)}
+.thumb{width:44px;height:44px;border-radius:10px;flex:none;display:grid;place-items:center;font-weight:700;color:#fff;font-size:1.05rem;background:var(--card2)}
 .tmeta{flex:1;min-width:0;display:grid}
 .tname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tsub{font-size:.78rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;gap:6px;align-items:center}
 .tsub .fl{background:none;border:0;color:inherit;padding:0;font-size:inherit;text-decoration:underline dotted;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tdur{color:var(--dim);font-size:.85rem;font-variant-numeric:tabular-nums}
-.badge{font-size:.66rem;font-weight:700;letter-spacing:.04em;border-radius:6px;padding:2px 6px;border:1px solid var(--line);color:var(--dim);display:inline-flex;align-items:center;gap:4px;flex:none}
-.badge.live{color:#ffb3b3;border-color:#5a2a2a}
+.badge{font-size:.66rem;font-weight:700;letter-spacing:.04em;border-radius:6px;padding:2px 6px;background:rgba(255,255,255,.1);color:var(--dim);display:inline-flex;align-items:center;gap:4px;flex:none}
+.badge.live{color:#ffb3b3;background:rgba(255,77,77,.14)}
 .badge.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--live);animation:blink 1.2s infinite}
 .eq{display:none;gap:2px;align-items:flex-end;height:16px;width:16px;flex:none}
 li.on .eq{display:flex}
@@ -181,61 +198,76 @@ li.on .eq{display:flex}
 body.is-paused .eq i{animation-play-state:paused}
 @keyframes eq{0%,100%{height:25%}50%{height:100%}}
 .empty{display:grid;justify-items:center;gap:10px;color:var(--dim);text-align:center;padding:20px 8px;cursor:default}
-.empty svg{width:96px;height:96px}
+.empty svg{width:88px;height:88px}
 .more{justify-self:center}
 .storage{font-size:.82rem;color:var(--dim);display:grid;gap:6px}
 .storage .bar{height:4px}
-.tip{display:flex;gap:12px;align-items:center;justify-content:space-between;border:1px solid var(--line);background:var(--card2);border-radius:var(--r-md);padding:12px 14px;font-size:.9rem;line-height:1.45}
+.tip{display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--card2);border-radius:var(--r-md);padding:12px 14px;font-size:.9rem;line-height:1.45}
+
+/* ===== Mini player ===== */
+.miniplayer{position:fixed;left:calc(10px + var(--sl));right:calc(10px + var(--sr));bottom:calc(10px + var(--sb));z-index:30;max-width:560px;margin:0 auto;display:flex;align-items:center;gap:2px;padding:7px 6px 7px 8px;
+ border-radius:22px;background:rgba(40,40,46,.8);-webkit-backdrop-filter:blur(30px) saturate(170%);backdrop-filter:blur(30px) saturate(170%);border:1px solid var(--line);box-shadow:0 10px 34px rgba(0,0,0,.5);overflow:hidden}
+.mini-prog{position:absolute;left:0;right:0;bottom:0;height:2px}
+.mini-prog i{display:block;height:100%;width:0;background:var(--acc)}
+.mini-info{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:none;border:0;text-align:left;padding:0;min-height:48px;color:var(--text)}
+.mini-info .thumb{width:44px;height:44px}
+.mini-play{background:var(--acc);color:var(--ink)}
+.mini-play:hover{background:var(--acc);color:var(--ink)}
+body.kb-open .miniplayer{display:none}
+@media(min-width:900px){.miniplayer{display:none!important}}
 
 /* ===== Bottom sheet, toast ===== */
-.scrim{position:fixed;inset:0;background:#0009;backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
+.scrim{position:fixed;inset:0;background:#0009;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
 .scrim.show{opacity:1;pointer-events:auto}
-.sheet{position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:100%;max-width:560px;max-height:90vh;max-height:90dvh;display:flex;flex-direction:column;background:var(--card);
+.sheet{position:fixed;left:0;right:0;bottom:var(--kb);margin:0 auto;width:100%;max-width:560px;max-height:calc(90vh - var(--kb));max-height:calc(90dvh - var(--kb));display:flex;flex-direction:column;background:rgba(32,32,38,.96);-webkit-backdrop-filter:blur(30px);backdrop-filter:blur(30px);
  border:1px solid var(--line);border-bottom:0;border-radius:var(--r-xl) var(--r-xl) 0 0;padding-bottom:var(--sb);z-index:41;transform:translateY(105%);visibility:hidden;transition:transform .3s,visibility 0s .3s}
 .sheet.open{transform:none;visibility:visible;transition:transform .3s}
-.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:14px var(--pad) 6px}
-.sheet-head h2{font-size:1.15rem}
+.sheet::before{content:"";width:38px;height:5px;border-radius:3px;background:rgba(255,255,255,.22);margin:8px auto 0;flex:none}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:8px var(--pad) 4px}
+.sheet-head h2{font-size:1.2rem;font-weight:700}
 .sheet-body{overflow-y:auto;overscroll-behavior:contain;padding:8px var(--pad) var(--pad);display:grid;gap:16px}
 .toasts{position:fixed;left:0;right:0;bottom:calc(16px + var(--sb));display:grid;gap:8px;justify-items:center;z-index:60;pointer-events:none;padding:0 16px}
-.toast{pointer-events:auto;background:#222a44;border:1px solid var(--line);border-radius:14px;padding:12px 16px;max-width:460px;display:flex;gap:12px;align-items:center;box-shadow:0 8px 24px #0008;animation:tin .25s}
+body.has-mini .toasts{bottom:calc(92px + var(--sb))}
+.toast{pointer-events:auto;background:rgba(58,58,66,.96);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:16px;padding:12px 16px;max-width:460px;display:flex;gap:12px;align-items:center;box-shadow:0 8px 28px #0009;animation:tin .25s;font-size:.93rem}
 @keyframes tin{from{opacity:0;transform:translateY(10px)}}
 
 /* ===== Biểu mẫu, báo thức ===== */
 .fld{display:grid;gap:8px}
 .fld>label,.fld>.lbl{font-size:.9rem;color:var(--dim)}
 .err{color:var(--danger);font-size:.85rem}
-.status-line{font-size:.9rem;color:var(--dim);min-height:1.3em}
+.status-line{font-size:.9rem;color:var(--dim);min-height:1.3em;line-height:1.45}
 .status-line.ok{color:var(--ok)}.status-line.bad{color:var(--danger)}
 .days{display:flex;gap:6px;flex-wrap:wrap}
-.day{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:transparent;font-size:.8rem;padding:0}
-.day[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:var(--ink);font-weight:700}
+.day{width:44px;height:44px;border-radius:50%;border:0;background:var(--fill);font-size:.8rem;padding:0}
+.day[aria-pressed=true]{background:var(--acc);color:var(--ink);font-weight:700}
 .days.sm .day{width:30px;height:30px;font-size:.66rem;pointer-events:none;color:var(--dim)}
 .days.sm .day[aria-pressed=true]{color:var(--ink)}
 .opts{display:grid;gap:8px}
-.opt{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;min-height:56px;cursor:pointer;position:relative}
+.opt{display:flex;gap:12px;align-items:center;border:1.5px solid transparent;background:rgba(120,120,128,.16);border-radius:var(--r-md);padding:12px 14px;min-height:56px;cursor:pointer;position:relative}
 .opt input{position:absolute;opacity:0;pointer-events:none}
-.opt:has(input:checked){border-color:var(--acc);background:#2a2416}
+.opt:has(input:checked){border-color:var(--acc);background:var(--tint)}
 .opt:has(input:focus-visible){outline:2px solid var(--acc);outline-offset:2px}
 .opt.dis{opacity:.45;cursor:not-allowed}
 .opt svg{width:22px;height:22px;fill:currentColor;flex:none;color:var(--acc)}
 .opt small{display:block;color:var(--dim);font-size:.8rem;margin-top:2px}
-.switch{position:relative;width:52px;height:32px;border-radius:16px;background:var(--line);border:0;flex:none;padding:0;transition:background .2s}
+.switch{position:relative;width:52px;height:32px;border-radius:16px;background:rgba(120,120,128,.4);border:0;flex:none;padding:0;transition:background .2s}
 .switch::before{content:"";position:absolute;inset:-6px}
-.switch::after{content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:50%;background:#fff;transition:transform .2s}
-.switch[aria-checked=true]{background:var(--acc)}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 2px 4px #0005;transition:transform .2s}
+.switch[aria-checked=true]{background:var(--ok)}
 .switch[aria-checked=true]::after{transform:translateX(20px)}
 .switch-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
 .alist{display:grid;gap:10px}
-.arow{display:grid;grid-template-columns:1fr auto;gap:8px 12px;padding:14px;border:1px solid var(--line);border-radius:var(--r-md);background:#101626}
+.arow{display:grid;grid-template-columns:1fr auto;gap:8px 12px;padding:14px;border-radius:var(--r-md);background:rgba(120,120,128,.14)}
 .ahead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.atime{font-size:2rem;font-weight:300;font-variant-numeric:tabular-nums}
+.atime{font-size:2.1rem;font-weight:300;font-variant-numeric:tabular-nums}
 .arow.off .atime,.arow.off .days,.arow.off .asrc{opacity:.45}
-.asub{color:var(--dim);font-size:.85rem}
+.asub{color:var(--dim);font-size:.85rem;line-height:1.45}
 .aacts{display:flex;gap:2px;align-items:center;justify-content:flex-end}
-.note{border:1px solid #5a4a22;background:#231d0f;color:#f3dfb4;border-radius:var(--r-md);padding:12px 14px;font-size:.88rem;line-height:1.5}
+.note{background:rgba(255,159,10,.12);color:#f3dfb4;border-radius:var(--r-md);padding:12px 14px;font-size:.88rem;line-height:1.5}
+.note.info-note{background:rgba(120,120,128,.16);color:var(--dim)}
 .pick-list{max-height:200px}
 .ring{position:fixed;inset:0;z-index:80;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;
- padding:calc(24px + var(--st)) 24px calc(24px + var(--sb));background:radial-gradient(circle at 50% 30%,#2a2416,#0d111df2 70%);backdrop-filter:blur(6px)}
+ padding:calc(24px + var(--st)) 24px calc(24px + var(--sb));background:radial-gradient(circle at 50% 30%,#2a2416,#0b0b0ef2 70%);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .ring.show{display:flex}
 .ring-time{font-size:4.5rem;font-weight:200;font-variant-numeric:tabular-nums;color:var(--acc);line-height:1}
 .ring-label{font-size:1.2rem;font-weight:600}
@@ -246,21 +278,32 @@ body.is-paused .eq i{animation-play-state:paused}
 @keyframes rip{0%{transform:scale(.4);opacity:.7}100%{transform:scale(1.9);opacity:0}}
 @keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(14deg)}40%{transform:rotate(-12deg)}60%{transform:rotate(8deg)}80%{transform:rotate(-6deg)}}
 .ring-btns{display:grid;gap:12px;width:min(360px,100%)}
-.btn-big{min-height:64px;border-radius:var(--r-md);font-size:1.1rem;font-weight:600;border:1px solid var(--line);background:transparent}
-.btn-big.main{background:var(--acc);border-color:var(--acc);color:var(--ink);min-height:76px;font-size:1.25rem}
+.btn-big{min-height:64px;border-radius:var(--r-md);font-size:1.1rem;font-weight:600;border:0;background:var(--fill)}
+.btn-big.main{background:var(--acc);color:var(--ink);min-height:76px;font-size:1.25rem}
+.btn-danger{color:#ff9d9d}
 
-.tab{font-size:.82rem;padding:0 2px;white-space:nowrap}
-.btn-danger{border-color:#6b2c2c;color:#ffb3b3}
+/* ===== YouTube ===== */
+.yt-box{position:relative;width:100%;aspect-ratio:16/9;min-height:200px;border-radius:var(--r-md);overflow:hidden;background:#000}
+.yt-box iframe,.yt-box #ytMount{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.yt-box.empty-box #ytMount{display:none}
+.yt-ph{position:absolute;inset:0;display:none;place-items:center;text-align:center;color:var(--dim);padding:20px;font-size:.92rem;line-height:1.5}
+.yt-box.empty-box .yt-ph{display:grid}
+.yt-input{display:flex;gap:8px}
+.yt-input .input{flex:1;min-width:0}
+
+/* ===== Sao lưu ===== */
+.bk-sec{display:grid;gap:12px;padding:14px;border-radius:var(--r-md);background:rgba(120,120,128,.14)}
+.bk-sec h3{font-size:1rem;font-weight:600}
+.chk{display:flex;gap:12px;align-items:center;min-height:44px;font-size:.95rem}
+.chk input{width:22px;height:22px;accent-color:var(--acc);flex:none}
+.result-list{display:grid;gap:4px;font-size:.88rem;color:var(--dim);line-height:1.5}
+
 /* ===== Giảm chuyển động ===== */
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div class="bg-glow" id="bgGlow" aria-hidden="true"></div>
-<div class="wave-foot" aria-hidden="true">
-  <svg viewBox="0 0 2400 90" preserveAspectRatio="none"><path d="M0 45q150-40 300 0t300 0 300 0 300 0 300 0 300 0 300 0 300 0V90H0z" fill="#f0b254"/></svg>
-  <svg viewBox="0 0 2400 90" preserveAspectRatio="none"><path d="M0 55q150 35 300 0t300 0 300 0 300 0 300 0 300 0 300 0 300 0V90H0z" fill="#6c5ce7"/></svg>
-</div>
 
 <div class="app">
   <header class="top">
@@ -270,10 +313,13 @@ body.is-paused .eq i{animation-play-state:paused}
     </div>
     <span class="snz hidden" id="snoozeChip" aria-live="polite"></span>
     <div class="clock" id="clock">00:00:00</div>
+    <button class="iconbtn" id="backupBtn" aria-label="Sao lưu và khôi phục" title="Sao lưu và khôi phục"><svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg></button>
     <button class="iconbtn" id="alarmBtn" aria-label="Báo thức" title="Báo thức"><svg viewBox="0 0 24 24"><path d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4a1.5 1.5 0 0 0-3 0v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1z"/></svg><span class="dot hidden" id="alarmDot"></span></button>
     <button class="pill sm hidden" id="installBtn" aria-label="Cài ứng dụng">Cài ứng dụng</button>
     <span class="net" id="netDot" role="img" aria-label="Đang online"></span>
   </header>
+
+  <div class="offline-bar hidden" id="offlineBar" role="status">Bạn đang offline. Nhạc đã lưu, lịch sử, yêu thích và danh sách YouTube đã lưu vẫn dùng được; Radio, URL và phát YouTube cần Internet.</div>
 
   <div class="tip hidden" id="iosTip" role="note" style="grid-column:1/-1">
     <span>Để cài: bấm nút Chia sẻ rồi chọn “Thêm vào Màn hình chính”.</span>
@@ -285,6 +331,7 @@ body.is-paused .eq i{animation-play-state:paused}
       <div class="cover-wrap" id="coverWrap"><div class="glow"></div><div class="cover" id="cover" aria-hidden="true"></div><div class="sheen"></div><svg class="tonearm" viewBox="0 0 120 150" aria-hidden="true"><circle cx="96" cy="22" r="14" fill="#2a3150"/><circle cx="96" cy="22" r="6" fill="#0d111d"/><path d="M96 22 40 112 28 126" stroke="#aeb5cc" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="17" y="121" width="22" height="12" rx="3" transform="rotate(-35 28 127)" fill="#f0b254"/></svg></div>
       <canvas id="viz" aria-hidden="true"></canvas>
       <div class="info">
+        <div class="info-main">
         <div class="title" id="title">Chưa có bài hát</div>
         <div class="sub">
           <span id="status">Thêm nhạc từ thiết bị của bạn</span>
@@ -292,6 +339,8 @@ body.is-paused .eq i{animation-play-state:paused}
           <span class="direct-tag hidden" id="directTag" title="Không có cân bằng âm lượng và sóng nhạc">Chế độ trực tiếp</span>
           <button class="pill sm hidden" id="retryBtn" aria-label="Thử kết nối lại">Thử lại</button>
         </div>
+        </div>
+        <button class="rowbtn heart" id="favBtn" aria-pressed="false" aria-label="Thêm vào Yêu thích" title="Yêu thích"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button>
       </div>
       <div class="row">
         <span class="time" id="cur">0:00</span>
@@ -348,6 +397,19 @@ body.is-paused .eq i{animation-play-state:paused}
       </div>
     </details>
 
+    <details class="card" id="setEq">
+      <summary>Equalizer 5 dải</summary>
+      <div class="acc-body">
+        <div class="pills"><button class="pill" id="eqOn" aria-pressed="true">EQ: bật</button><button class="pill sm" id="eqBandsReset">Đặt lại EQ</button></div>
+        <div class="eq-band"><label for="eq0">60 Hz</label><input type="range" id="eq0" min="-12" max="12" step="1" value="0" aria-label="Dải 60 Hz"><output id="eqOut0" for="eq0">0 dB</output></div>
+        <div class="eq-band"><label for="eq1">230 Hz</label><input type="range" id="eq1" min="-12" max="12" step="1" value="0" aria-label="Dải 230 Hz"><output id="eqOut1" for="eq1">0 dB</output></div>
+        <div class="eq-band"><label for="eq2">910 Hz</label><input type="range" id="eq2" min="-12" max="12" step="1" value="0" aria-label="Dải 910 Hz"><output id="eqOut2" for="eq2">0 dB</output></div>
+        <div class="eq-band"><label for="eq3">3,6 kHz</label><input type="range" id="eq3" min="-12" max="12" step="1" value="0" aria-label="Dải 3,6 kHz"><output id="eqOut3" for="eq3">0 dB</output></div>
+        <div class="eq-band"><label for="eq4">14 kHz</label><input type="range" id="eq4" min="-12" max="12" step="1" value="0" aria-label="Dải 14 kHz"><output id="eqOut4" for="eq4">0 dB</output></div>
+        <div class="status-line" id="eqNote" role="status" aria-live="polite"></div>
+      </div>
+    </details>
+
     <details class="card" id="setSleep">
       <summary>Hẹn giờ tắt nhạc</summary>
       <div class="acc-body">
@@ -366,8 +428,12 @@ body.is-paused .eq i{animation-play-state:paused}
   <section class="card library" aria-label="Thư viện">
     <div class="tabs" role="tablist" aria-label="Thư viện">
       <button class="tab" role="tab" id="tabMusic" aria-selected="true" aria-controls="panelMusic" tabindex="0">Nhạc của tôi</button>
+      <button class="tab" role="tab" id="tabRec" aria-selected="false" aria-controls="panelRec" tabindex="-1">Dành cho bạn</button>
+      <button class="tab" role="tab" id="tabFav" aria-selected="false" aria-controls="panelFav" tabindex="-1">Yêu thích</button>
+      <button class="tab" role="tab" id="tabHist" aria-selected="false" aria-controls="panelHist" tabindex="-1">Lịch sử</button>
       <button class="tab" role="tab" id="tabPl" aria-selected="false" aria-controls="panelPl" tabindex="-1">Danh sách</button>
       <button class="tab" role="tab" id="tabRadio" aria-selected="false" aria-controls="panelRadio" tabindex="-1">Radio / URL</button>
+      <button class="tab" role="tab" id="tabYt" aria-selected="false" aria-controls="panelYt" tabindex="-1">YouTube</button>
     </div>
 
     <div class="panel" id="panelMusic" role="tabpanel" aria-labelledby="tabMusic">
@@ -421,10 +487,82 @@ body.is-paused .eq i{animation-play-state:paused}
       <ul class="list pick-list hidden" id="rResults" aria-label="Kết quả tìm đài"></ul>
       <ul class="list" id="radioList" aria-label="Danh sách đài đã lưu"></ul>
     </div>
+
+    <div class="panel" id="panelRec" role="tabpanel" aria-labelledby="tabRec" hidden>
+      <div class="pills"><button class="pill main" id="recPlay">Phát tất cả</button><button class="pill" id="recRefresh">Làm mới</button></div>
+      <div class="status-line" id="recNote"></div>
+      <ul class="list" id="recList" aria-label="Gợi ý dành cho bạn"></ul>
+    </div>
+
+    <div class="panel" id="panelFav" role="tabpanel" aria-labelledby="tabFav" hidden>
+      <div class="pills"><button class="pill main" id="favPlayAll">Phát tất cả</button></div>
+      <ul class="list" id="favList" aria-label="Danh sách yêu thích"></ul>
+    </div>
+
+    <div class="panel" id="panelHist" role="tabpanel" aria-labelledby="tabHist" hidden>
+      <div class="pills"><button class="pill btn-danger" id="histClear">Xóa lịch sử</button></div>
+      <ul class="list" id="histList" aria-label="Lịch sử nghe nhạc"></ul>
+    </div>
+
+    <div class="panel" id="panelYt" role="tabpanel" aria-labelledby="tabYt" hidden>
+      <div class="status-line bad hidden" id="ytNet" role="status">Bạn đang offline. YouTube cần Internet; danh sách liên kết đã lưu vẫn xem được.</div>
+      <div class="yt-input"><input class="input" id="ytUrl" type="text" inputmode="url" placeholder="Dán liên kết YouTube" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Liên kết YouTube"><button class="pill main" id="ytGo">Phát</button></div>
+      <div class="status-line" id="ytMsg" role="status"></div>
+      <div class="yt-box empty-box" id="ytBox"><div id="ytMount"></div><div class="yt-ph">Dán liên kết YouTube ở trên để phát video tại đây.</div></div>
+      <div class="pills"><button class="pill" id="ytToggle" disabled>Phát</button><a class="pill" id="ytOpen" target="_blank" rel="noopener noreferrer" aria-disabled="true">Mở trong YouTube</a><button class="pill" id="ytSave" disabled>Lưu liên kết</button><button class="pill" id="ytReload" disabled>Tải lại</button></div>
+      <div class="note info-note" role="note">Video phát bằng trình phát nhúng chính thức của YouTube và cần Internet. EQ, sóng nhạc và cân bằng âm lượng của ứng dụng không áp dụng cho âm thanh YouTube. Video chỉ phát khi tab này đang hiển thị. Trên iPhone, không thể bảo đảm trình phát nhúng tiếp tục phát khi khóa màn hình hoặc chuyển ứng dụng; hãy bấm “Mở trong YouTube” để dùng Background Play của YouTube nếu tài khoản và khu vực của bạn hỗ trợ.</div>
+      <ul class="list" id="ytList" aria-label="Liên kết YouTube đã lưu"></ul>
+    </div>
   </section>
 </div>
 
+<div class="miniplayer hidden" id="mini" role="region" aria-label="Trình phát thu gọn">
+  <div class="mini-prog" aria-hidden="true"><i id="miniBar"></i></div>
+  <button class="mini-info" id="miniOpen" aria-label="Mở trình phát đầy đủ"><div class="thumb" id="miniThumb" aria-hidden="true"></div><div class="tmeta"><div class="tname" id="miniTitle"></div><div class="tsub" id="miniSub"></div></div></button>
+  <button class="rowbtn" id="miniPrev" aria-label="Bài trước"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+  <button class="rowbtn mini-play" id="miniPlay" aria-label="Phát hoặc tạm dừng"><svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg></button>
+  <button class="rowbtn" id="miniNext" aria-label="Bài tiếp theo"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
+  <button class="rowbtn" id="miniClose" aria-label="Ẩn trình phát thu gọn"><svg viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+</div>
+
 <div class="scrim" id="scrim"></div>
+
+<section class="sheet" id="sheetBackup" role="dialog" aria-modal="true" aria-labelledby="bkTitle" aria-hidden="true">
+  <div class="sheet-head"><h2 id="bkTitle">Sao lưu và khôi phục</h2><button class="rowbtn" data-close aria-label="Đóng"><svg viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button></div>
+  <div class="sheet-body">
+    <div class="bk-sec">
+      <h3>Sao lưu</h3>
+      <p class="asub">Xuất dữ liệu thành một file JSON: nhạc đã nhập, đài radio/URL, yêu thích, lịch sử, liên kết YouTube, danh sách phát, báo thức và cài đặt.</p>
+      <label class="chk"><input type="checkbox" id="bkAudio" checked><span>Kèm file nhạc (file có thể rất lớn)</span></label>
+      <div class="pills"><button class="pill main" id="bkStart">Tạo file sao lưu</button><button class="pill hidden" id="bkCancel">Hủy</button></div>
+      <div class="bar hidden" id="bkProg"><i id="bkBar"></i></div>
+      <div class="status-line" id="bkText" role="status"></div>
+      <div class="pills hidden" id="bkDone"><button class="pill main" id="bkDownload">Tải file sao lưu</button><button class="pill hidden" id="bkShare">Chia sẻ hoặc lưu vào Tệp</button></div>
+    </div>
+    <div class="bk-sec">
+      <h3>Khôi phục</h3>
+      <p class="asub">Mặc định là chế độ GỘP: dữ liệu hiện có được giữ nguyên, chỉ thêm mục còn thiếu; bài trùng được bỏ qua tự động.</p>
+      <div class="pills"><button class="pill" id="rsPick">Chọn file sao lưu</button></div>
+      <input type="file" id="rsFile" accept=".json,application/json" hidden>
+      <div class="status-line" id="rsText" role="status"></div>
+      <div id="rsInfo" class="hidden" style="display:grid;gap:6px">
+        <div class="asub" id="rsSummary"></div>
+        <label class="chk"><input type="checkbox" id="rsTracks" checked><span>Nhạc (kèm âm thanh)</span></label>
+        <label class="chk"><input type="checkbox" id="rsStreams" checked><span>Đài radio và URL</span></label>
+        <label class="chk"><input type="checkbox" id="rsFavs" checked><span>Yêu thích</span></label>
+        <label class="chk"><input type="checkbox" id="rsHist" checked><span>Lịch sử nghe</span></label>
+        <label class="chk"><input type="checkbox" id="rsYt" checked><span>Liên kết YouTube</span></label>
+        <label class="chk"><input type="checkbox" id="rsPl" checked><span>Danh sách phát</span></label>
+        <label class="chk"><input type="checkbox" id="rsAlarms" checked><span>Báo thức (gộp, tối đa 5)</span></label>
+        <label class="chk"><input type="checkbox" id="rsSettings"><span>Cài đặt và EQ (ghi đè cài đặt hiện tại)</span></label>
+        <div class="pills"><button class="pill main" id="rsStart">Bắt đầu khôi phục (gộp)</button><button class="pill hidden" id="rsCancel">Hủy</button></div>
+      </div>
+      <div class="bar hidden" id="rsProg"><i id="rsBar"></i></div>
+      <div class="result-list" id="rsResult" role="status"></div>
+    </div>
+    <div class="note info-note" id="bkDb"></div>
+  </div>
+</section>
 
 <section class="sheet" id="sheetAlarm" role="dialog" aria-modal="true" aria-labelledby="alarmTitle" aria-hidden="true">
   <div class="sheet-head"><h2 id="alarmTitle">Báo thức</h2><button class="rowbtn" data-close aria-label="Đóng"><svg viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button></div>
@@ -523,7 +661,7 @@ body.is-paused .eq i{animation-play-state:paused}
   <div class="sheet-head"><h2 id="addTitle">Thêm bài vào</h2><button class="rowbtn" data-close aria-label="Đóng"><svg viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button></div>
   <div class="sheet-body">
     <div class="status-line" id="addTrack"></div>
-    <div class="pills"><button class="pill" id="addNext">Phát tiếp theo</button><button class="pill" id="addQueue">Thêm vào hàng đợi</button></div>
+    <div class="pills"><button class="pill" id="addNext">Phát tiếp theo</button><button class="pill" id="addQueue">Thêm vào hàng đợi</button><button class="pill" id="addFav">Thêm vào Yêu thích</button></div>
     <div class="fld"><span class="lbl">Thêm vào danh sách phát</span><ul class="list pick-list" id="addPlLists" aria-label="Chọn danh sách phát"></ul></div>
     <div class="fld"><label for="addPlName">Hoặc tạo danh sách phát mới</label>
       <div class="row"><input class="input" id="addPlName" maxlength="40" autocomplete="off" placeholder="Tên danh sách"><button class="pill main" id="addPlMake">Tạo và thêm</button></div>
@@ -585,7 +723,7 @@ const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platfo
 
 /* ============ CÀI ĐẶT (localStorage, chỉ dữ liệu nhỏ) ============ */
 const SKEY = "nn.settings.v1";
-const S = Object.assign({ vol: 80, muted: false, shuffle: false, repeat: 0, norm: true, xf: false, xfSec: 6, tab: "music", bass: 0, treble: 0, space: "off" }, lsGet(SKEY, {}));
+const S = Object.assign({ vol: 80, muted: false, shuffle: false, repeat: 0, norm: true, xf: false, xfSec: 6, tab: "music", bass: 0, treble: 0, space: "off", eqOn: true, eq: [0, 0, 0, 0, 0] }, lsGet(SKEY, {}));
 let saveT = 0;
 const saveSettings = () => { clearTimeout(saveT); saveT = setTimeout(() => lsSet(SKEY, S), 300); };
 
@@ -616,7 +754,7 @@ let repeat = clamp(+S.repeat || 0, 0, 2);   // 0: tắt, 1: cả danh sách, 2: 
 let shuffleOn = !!S.shuffle, normOn = !!S.norm, xfOn = !!S.xf, muted = !!S.muted;
 let xfSec = clamp(+S.xfSec || 6, 2, 12);
 let fading = false, seeking = false, fadeEndMs = 0, fadeOld = null, userPaused = false;
-let mode = "lib";           // "lib": nhạc của tôi, "radio": đài / URL
+let mode = "lib";           // nguồn đang phát: "lib" nhạc của tôi, "radio" đài / URL, "yt" YouTube
 let stations = [], stPos = -1;
 let directEl = null, directOn = false;      // thẻ audio thứ ba cho radio "chế độ trực tiếp"
 let radioStatusText = "";
@@ -626,32 +764,61 @@ let ctx, decks = [], active = 0, comp, makeup, limiter, analyser, vizAn, sleepG,
 let bassF, trebleF, spIn, spOut, sp = null, spTimer = 0, spAng = 0, spT0 = 0;   // Bass/Treble và âm thanh không gian
 let queue = [], hist = [], queuedNow = null, plCtx = null;                    // hàng đợi và ngữ cảnh danh sách phát
 
-const curTrack = () => mode === "lib" ? (queuedNow || tracks[order[pos]]) : stations[stPos];
+const curTrack = () => mode === "lib" ? (queuedNow || tracks[order[pos]]) : mode === "yt" ? ytCur : stations[stPos];
 const isLive = () => mode === "radio" && !!stations[stPos] && stations[stPos].kind === "live";
 const activeEl = () => (directOn && directEl) ? directEl : decks[active].el;
-const anyPlaying = () => (directOn && directEl && !directEl.paused) || decks.some(d => !d.el.paused);
+/* elPlaying: chỉ các thẻ audio của ứng dụng; anyPlaying: thêm cả YouTube (nguồn độc lập trong iframe) */
+const elPlaying = () => (directOn && directEl && !directEl.paused) || decks.some(d => !d.el.paused);
+const anyPlaying = () => elPlaying() || ytPlaying();
 function finiteDur(el) { const t = curTrack(), d = (t && t.dur) || (el && el.duration); return isFinite(d) && d > 0 ? d : 0; }
-const curDur = el => isLive() ? Infinity : finiteDur(el);
+const curDur = el => isLive() ? Infinity : mode === "yt" ? ytDurSec() : finiteDur(el);
 
-/* ============ LƯU TRỮ LÂU DÀI (IndexedDB v2) ============
-   Kho "t" giữ nguyên từ bản cũ (nhạc người dùng), chỉ THÊM kho "streams". */
+/* ============ LƯU TRỮ LÂU DÀI (IndexedDB v3) ============
+   Giữ nguyên tên database và hai kho cũ: "t" (nhạc, keyPath id) và "streams" (radio/URL, keyPath id).
+   Phiên bản 3 CHỈ THÊM ba kho mới, không xóa và không sửa kho cũ:
+     favorites (keyPath key)          : mục yêu thích (nhạc / radio / YouTube), khóa ổn định, không phụ thuộc ID tự tăng
+     history   (keyPath id, index ts) : lịch sử nghe, giới hạn 500 bản ghi
+     yt        (keyPath videoId)      : liên kết YouTube đã lưu (chỉ metadata nhẹ, KHÔNG lưu video hay âm thanh)
+   Nếu database đã ở phiên bản cao hơn 3, ứng dụng mở đúng phiên bản hiện có và chỉ thêm kho còn thiếu (không bao giờ yêu cầu hạ phiên bản). */
 let db = null;
-const DB_NAME = "nguyen-nhat-player";
+const DB_NAME = "nguyen-nhat-player", DB_VERSION = 3;
+const DB_STORES = [["t", { keyPath: "id", autoIncrement: true }], ["streams", { keyPath: "id", autoIncrement: true }],
+  ["favorites", { keyPath: "key" }], ["history", { keyPath: "id", autoIncrement: true }], ["yt", { keyPath: "videoId" }]];
+const dbInfo = { version: 0, created: [], blocked: false, error: "" };
+function ensureStores(d) {
+  DB_STORES.forEach(s => {
+    if (d.objectStoreNames.contains(s[0])) return;                 // chỉ tạo kho chưa tồn tại
+    const st = d.createObjectStore(s[0], s[1]); dbInfo.created.push(s[0]);
+    if (s[0] === "history") st.createIndex("ts", "ts");
+  });
+}
 const dbOpen = () => new Promise(res => {
-  let done = false;
-  const fin = v => { if (!done) { done = true; clearTimeout(to); res(v); } };
-  const to = setTimeout(() => fin(null), 8000);
-  try {
-    const r = indexedDB.open(DB_NAME, 2);
-    r.onupgradeneeded = () => {
+  let done = false, timer = 0;
+  const fin = v => { if (!done) { done = true; clearTimeout(timer); res(v); } };
+  const arm = ms => { clearTimeout(timer); timer = setTimeout(() => { if (!done) { dbInfo.error = "timeout"; fin(null); } }, ms); };
+  const open = ver => {
+    let r;
+    try { r = ver ? indexedDB.open(DB_NAME, ver) : indexedDB.open(DB_NAME); } catch (e) { dbInfo.error = String(e && e.name || e); return fin(null); }
+    r.onupgradeneeded = () => { try { ensureStores(r.result); } catch (e) { dbInfo.error = "upgrade:" + (e && e.name); try { r.transaction.abort(); } catch (x) {} } };
+    r.onsuccess = () => {
       const d = r.result;
-      if (!d.objectStoreNames.contains("t")) d.createObjectStore("t", { keyPath: "id", autoIncrement: true });
-      if (!d.objectStoreNames.contains("streams")) d.createObjectStore("streams", { keyPath: "id", autoIncrement: true });
+      d.onversionchange = () => d.close();                          // tab khác nâng cấp: nhả kết nối để không chặn
+      if (done) {                                                   // mở xong sau khi đã hết thời gian chờ (ví dụ vừa đóng tab cũ)
+        d.close(); toast("Kho dữ liệu đã được cập nhật. Hãy tải lại ứng dụng.", { action: "Tải lại", ms: 15000, onAction: () => location.reload() }); return;
+      }
+      if (DB_STORES.some(s => !d.objectStoreNames.contains(s[0]))) { // phiên bản đã cao hơn nhưng còn thiếu kho: nâng thêm 1 phiên bản để bổ sung
+        const nv = d.version + 1; d.close(); return open(nv);
+      }
+      dbInfo.version = d.version; fin(d);
     };
-    r.onsuccess = () => { r.result.onversionchange = () => r.result.close(); fin(r.result); };
-    r.onerror = () => fin(null);
-    r.onblocked = () => console.warn("[db] bị chặn bởi tab cũ đang mở, hãy đóng các tab khác");
-  } catch (e) { fin(null); }
+    r.onerror = () => {
+      const e = r.error; dbInfo.error = String(e && e.name || "error");
+      if (e && e.name === "VersionError" && ver) { r.onerror = null; return open(0); }   // phiên bản hiện có cao hơn: mở đúng phiên bản đó
+      console.warn("[db] không mở được", e); fin(null);
+    };
+    r.onblocked = () => { dbInfo.blocked = true; toast("Có tab cũ đang giữ kho dữ liệu. Hãy đóng các tab Nguyễn Nhật khác rồi mở lại.", { ms: 9000 }); arm(30000); };
+  };
+  arm(8000); open(DB_VERSION);
 });
 const isQuota = e => !!(e && (e.name === "QuotaExceededError" || e.code === 22));
 /* Ghi một hoặc nhiều bản ghi trong MỘT transaction. Trả về { ok, ids, id, error, quota } */
@@ -694,6 +861,38 @@ const dbPatch = (id, patch, store) => new Promise(res => {
   } catch (e) { res(false); }
 });
 const dbSetDur = t => dbPatch(t.id, { dur: t.dur, dv: 2 });
+/* Ghi bản ghi theo khóa (put: ghi đè theo khóa) cho các kho có keyPath tự chọn. Trả về { ok, keys, error, quota } */
+function dbPutRecs(store, recs) {
+  return new Promise(res => {
+    if (!db) return res({ ok: false, keys: [], error: new Error("Không có kho lưu trữ"), quota: false });
+    try {
+      const tx = db.transaction(store, "readwrite"), st = tx.objectStore(store), keys = [];
+      recs.forEach(r => { const q = st.put(r); q.onsuccess = () => keys.push(q.result); });
+      tx.oncomplete = () => res({ ok: true, keys, error: null, quota: false });
+      tx.onabort = tx.onerror = () => res({ ok: false, keys: [], error: tx.error, quota: isQuota(tx.error) });
+    } catch (e) { res({ ok: false, keys: [], error: e, quota: isQuota(e) }); }
+  });
+}
+const dbClearStore = store => new Promise(res => {
+  if (!db) return res(false);
+  try { const tx = db.transaction(store, "readwrite"); tx.objectStore(store).clear(); tx.oncomplete = () => res(true); tx.onerror = tx.onabort = () => res(false); }
+  catch (e) { res(false); }
+});
+/* Giữ tối đa max bản ghi lịch sử: xóa các bản ghi cũ nhất theo thời gian */
+function dbTrimHistory(max) {
+  return new Promise(res => {
+    if (!db) return res(false);
+    try {
+      const tx = db.transaction("history", "readwrite"), st = tx.objectStore("history"), c = st.count();
+      c.onsuccess = () => {
+        let over = c.result - max; if (over <= 0) return;
+        const src = st.indexNames.contains("ts") ? st.index("ts") : st, cur = src.openCursor();
+        cur.onsuccess = () => { const k = cur.result; if (k && over > 0) { k.delete(); over--; k.continue(); } };
+      };
+      tx.oncomplete = () => res(true); tx.onerror = tx.onabort = () => res(false);
+    } catch (e) { res(false); }
+  });
+}
 
 /* ============ WEB AUDIO ============
    deck(audio) -> deckGain -> compressor -> [analyser đo RMS]
@@ -737,13 +936,13 @@ function initAudio() {
   /* Mở khóa cả hai deck và thẻ trực tiếp ngay lần chạm đầu tiên: di động chỉ cho phát tự động
      ở nền (chuyển bài lúc tắt màn hình, báo thức) với thẻ audio đã được người dùng kích hoạt. */
   decks.map(d => d.el).concat([directEl]).forEach(el => { el.src = SILENT; el.play().then(() => { if (el.src === SILENT) el.pause(); }).catch(() => {}); });
-  ctx.onstatechange = () => { if (ctx.state !== "running" && anyPlaying() && !directOn) ctx.resume().catch(() => {}); };
-  document.addEventListener("visibilitychange", () => { if (ctx.state !== "running" && anyPlaying() && !directOn) ctx.resume().catch(() => {}); });
+  ctx.onstatechange = () => { if (ctx.state !== "running" && elPlaying() && !directOn) ctx.resume().catch(() => {}); };
+  document.addEventListener("visibilitychange", () => { if (ctx.state !== "running" && elPlaying() && !directOn) ctx.resume().catch(() => {}); });
   comp.connect(analyser); comp.connect(makeup);
-  makeup.connect(bassF); bassF.connect(trebleF); trebleF.connect(spIn); buildSpace(); spOut.connect(limiter);   // makeup -> bass -> treble -> không gian -> limiter
+  makeup.connect(bassF); bassF.connect(trebleF); buildEq(trebleF, spIn); buildSpace(); spOut.connect(limiter);   // makeup -> bass -> treble -> không gian -> limiter
   limiter.connect(vizAn); limiter.connect(sleepG);
   sleepG.connect(alarmG); alarmG.connect(volG); volG.connect(ctx.destination);
-  applyNorm(); applyVolume(); applyFx();
+  applyNorm(); applyVolume(); applyFx(); applyEq();
   initSession();
   setInterval(mainTick, 250);                       // một vòng duy nhất: kiểm tra crossfade + cân bằng âm lượng
 }
@@ -765,7 +964,7 @@ function applyNorm() {
 }
 /* Tự tăng âm: đo RMS sau compressor rồi đẩy gain về mức mục tiêu (-18 dBFS), giới hạn 0.7x đến 3x */
 function autoGainLoop() {
-  if (!normOn || !ctx || directOn || !anyPlaying() || document.hidden) return;   // ngừng khi tab ẩn hoặc không phát
+  if (!normOn || !ctx || directOn || !elPlaying() || document.hidden) return;   // ngừng khi tab ẩn hoặc không phát
   analyser.getFloatTimeDomainData(buf);
   let sum = 0; for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
   const rms = Math.sqrt(sum / buf.length);
@@ -778,11 +977,13 @@ function applyVolume() {
   const vs = $("#vol"), v = Math.max(vs.value / 100, volFloor), mute = muted && !alarmRinging;
   if (ctx) volG.gain.setTargetAtTime(mute ? 0 : v * v, ctx.currentTime, 0.03);   // v² cho cảm giác tuyến tính hơn
   if (directEl) directEl.volume = mute ? 0 : clamp(v * v, 0, 1);
+  ytApplyVolume();
   $("#mute").classList.toggle("off", muted || vs.value === "0");
   $("#mute").setAttribute("aria-label", muted ? "Bật tiếng" : "Tắt tiếng");
   const note = $("#volNote");
-  note.classList.toggle("hidden", !(directOn && IS_IOS));
-  note.textContent = (directOn && IS_IOS) ? "Chế độ trực tiếp: hãy dùng nút âm lượng của máy." : "";
+  const volHint = IS_IOS && (directOn || mode === "yt");
+  note.classList.toggle("hidden", !volHint);
+  note.textContent = volHint ? (mode === "yt" ? "YouTube: trên iPhone hãy dùng nút âm lượng của máy." : "Chế độ trực tiếp: hãy dùng nút âm lượng của máy.") : "";
   fill(vs);
 }
 
@@ -804,8 +1005,8 @@ function sessionMeta() {
   const live = mode === "radio";
   try {
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: t.name, artist: live ? "Radio trực tuyến" : "Nguyễn Nhật",
-      album: live ? (t.host || "") : (t.folder || "Nhạc của tôi")
+      title: t.name, artist: mode === "yt" ? "YouTube" : live ? "Radio trực tuyến" : "Nguyễn Nhật",
+      album: mode === "yt" ? "" : live ? (t.host || "") : (t.folder || "Nhạc của tôi")
     });
   } catch (e) {}
 }
@@ -820,6 +1021,7 @@ function updatePos(el, dur) {                       // thanh vị trí trên mà
 /* ============ ĐIỀU KHIỂN PHÁT ============ */
 /* Mọi đường dừng chủ động (người dùng, hẹn giờ, báo thức, đổi sang radio) đều đi qua đây: userPaused = true trước khi pause() */
 function pauseAll() {
+  ytPause();
   userPaused = true; fading = false;
   cancelRetry();
   decks.forEach(d => d.el.pause());
@@ -832,6 +1034,7 @@ function playErr(e) {
 }
 function resumePlay() {
   initAudio();
+  if (mode === "yt") { ytResume(); return; }
   if (mode === "lib" && !queuedNow && pos < 0 && queue.length) { next(false); return; }   // chưa phát gì mà có hàng đợi
   if (mode === "lib") {                              // chưa có bài, hoặc bài hiện tại đã bị xóa lúc tạm dừng (deck không còn nguồn)
     const src = decks[active].el.getAttribute("src");
@@ -847,10 +1050,11 @@ function togglePlay() { initAudio(); if (anyPlaying()) pauseAll(); else resumePl
 /* Phát một bài cụ thể (fade = true và đang có nhạc thì crossfade giữa hai deck). Không đổi vị trí pos của thư viện. */
 function startTrack(t, fade) {
   initAudio();
+  ytLeave();                                        // đổi sang nhạc nội bộ: tạm dừng YouTube nếu đang phát
   const fromRadio = mode === "radio";
   if (fromRadio) leaveRadio();                      // dừng luồng, hủy hls, trả deck về trạng thái sạch
   if (ctx.state !== "running") ctx.resume().catch(() => {});
-  mode = "lib";
+  mode = "lib"; playToken++;
   const old = decks[active], nxt = decks[1 - active], now = ctx.currentTime, d = xfSec;
   const doFade = !!(fade && xfOn && !fromRadio && !old.el.paused);
   userPaused = false; radioStatusText = "";
@@ -886,6 +1090,7 @@ function nextPos() {
   return repeat === 1 ? 0 : -1;
 }
 function next(fade) {
+  if (mode === "yt") { ytStep(1); return; }
   if (mode === "radio") { stepStation(1); return; }
   if (!queue.length && plCtx && repeat === 1) { const it = plItems(plCtx.id, plCtx.shuffle); if (it.length) queue = it; }   // lặp cả danh sách phát
   if (queue.length) {                               // hàng đợi được phát trước
@@ -898,6 +1103,7 @@ function next(fade) {
   if (n >= 0) play(n, fade); else pauseAll();       // hết danh sách: dừng hẳn (userPaused) để không bị tự phát lại
 }
 function prev() {
+  if (mode === "yt") { ytStep(-1); return; }
   if (mode === "radio") { stepStation(-1); return; }
   const el = decks[active].el;
   if (el.currentTime > 3) { el.currentTime = 0; return; }   // quá 3 giây thì quay lại đầu bài
@@ -907,15 +1113,16 @@ function prev() {
 }
 function onEnded() {
   if (mode === "radio") { onStationEnded(); return; }
-  if (repeat === 2) { const el = decks[active].el; el.currentTime = 0; el.play().catch(playErr); return; }
+  if (repeat === 2) { playToken++; const el = decks[active].el; el.currentTime = 0; el.play().catch(playErr); return; }
   if (!fading) next(false);
 }
 function seekTo(sec) {
+  if (mode === "yt") { ytSeekTo(sec); return; }
   if (isLive() || !isFinite(sec)) return;           // radio: không tua
   const el = activeEl(), d = curDur(el);
   el.currentTime = clamp(sec, 0, d > 0 ? d : sec);
 }
-const seekBy = delta => { if (!isLive()) seekTo(activeEl().currentTime + delta); };
+const seekBy = delta => { if (mode === "yt") seekTo(ytCurrentSec() + delta); else if (!isLive()) seekTo(activeEl().currentTime + delta); };
 
 /* Crossfade và dừng deck cũ: gọi từ vòng mainTick (không lệ thuộc timeupdate vốn bị bóp khi chạy nền) */
 function xfCheck() {
@@ -932,12 +1139,13 @@ function onTime() {
   const dur = finiteDur(el), sk = $("#seek");
   if (!seeking && dur) { sk.value = Math.min(1000, el.currentTime / dur * 1000); fill(sk); }
   $("#cur").textContent = fmt(el.currentTime); $("#dur").textContent = fmt(dur);
-  updatePos(el, dur);
+  updatePos(el, dur); miniProg(el.currentTime, dur);
 }
 
 /* ============ GIAO DIỆN TRẠNG THÁI ============ */
 function setStatus() {
   const el = $("#status");
+  if (mode === "yt") { el.textContent = ytStatusText || "YouTube"; return; }
   if (mode === "radio") { el.textContent = radioStatusText || "Radio trực tuyến"; return; }
   if (!tracks.length) el.textContent = "Thêm nhạc từ thiết bị của bạn";
   else if (pos < 0) el.textContent = "Bấm phát để nghe";
@@ -953,12 +1161,12 @@ function syncPlayBtn() {
   $("#playIcon").innerHTML = playing ? PAUSE_SVG : PLAY_SVG;
   $("#play").setAttribute("aria-label", playing ? "Tạm dừng" : "Phát");
   document.body.classList.toggle("is-paused", !playing);
-  if ("mediaSession" in navigator) navigator.mediaSession.playbackState = (playing || keepActive) ? "playing" : "paused";
-  setStatus(); updateDocTitle();
+  if ("mediaSession" in navigator) navigator.mediaSession.playbackState = (elPlaying() || keepActive) ? "playing" : "paused";
+  setStatus(); updateDocTitle(); miniUpdate();
 }
 /* Đồng bộ nhãn và trạng thái các nút bật/tắt từ biến trạng thái (một nguồn duy nhất) */
 function renderToggles() {
-  const radio = mode === "radio", onoff = v => v ? "bật" : "tắt";
+  const radio = mode !== "lib", onoff = v => v ? "bật" : "tắt";
   const n = $("#norm"); n.setAttribute("aria-pressed", String(normOn)); n.textContent = "Cân bằng âm lượng: " + onoff(normOn);
   const x = $("#xf"); x.setAttribute("aria-pressed", String(xfOn)); x.textContent = "Crossfade: " + onoff(xfOn);
   $("#xfSec").value = xfSec; fill($("#xfSec")); $("#xfOut").textContent = xfSec + " giây";
@@ -966,22 +1174,25 @@ function renderToggles() {
   sh.setAttribute("aria-pressed", String(shuffleOn)); sh.setAttribute("aria-label", "Trộn bài: " + onoff(shuffleOn));
   rp.setAttribute("aria-pressed", String(repeat > 0)); rp.setAttribute("aria-label", rl); rp.classList.toggle("one-on", repeat === 2);
   sh.disabled = rp.disabled = radio;
-  sh.title = radio ? "Không dùng được khi nghe radio" : "Trộn bài: " + onoff(shuffleOn);
-  rp.title = radio ? "Không dùng được khi nghe radio" : rl;
+  sh.title = radio ? "Không dùng được khi nghe radio hoặc YouTube" : "Trộn bài: " + onoff(shuffleOn);
+  rp.title = radio ? "Không dùng được khi nghe radio hoặc YouTube" : rl;
 }
 /* Cập nhật toàn bộ khu "đang phát": tên, dòng phụ, ảnh bìa, nhãn trực tiếp, phiên media */
 function refreshNow() {
   const t = curTrack(), live = isLive();
   $("#player").classList.toggle("is-live", live);
-  $("#seek").disabled = live;
+  $("#seek").disabled = live || (mode === "yt" && !ytDurSec());
   $("#title").textContent = t ? t.name : "Chưa có bài hát";
-  $("#aux").textContent = !t ? "" : (mode === "radio" ? "Radio trực tuyến" : (t.folder || ""));
+  $("#aux").textContent = !t ? "" : (mode === "yt" ? "YouTube" : mode === "radio" ? "Radio trực tuyến" : (t.folder || ""));
   $("#directTag").classList.toggle("hidden", !(mode === "radio" && directOn));
   if (live) { $("#seek").value = 0; fill($("#seek")); }
   setCover(t ? t.name : "", mode === "radio");
   renderToggles(); sessionMeta(); sessionActions(); syncPlayBtn(); applyVolume();
   markCurrent(true); markStation(); renderQueue();
+  favSync(); miniUpdate(); eqStatus(); ytUiSync();
+  if (lastKeepMode !== mode) { lastKeepMode = mode; syncKeepAlive(); }   // YouTube: không dùng âm im lặng cùng lúc
 }
+let lastKeepMode = "lib";
 /* Đưa bộ phát về trạng thái trống */
 function resetNow() {
   if (ctx) pauseAll();
@@ -1300,7 +1511,7 @@ function trackRow(t, p) {
   const more = document.createElement("button"); more.className = "rowbtn more"; more.type = "button"; more.setAttribute("aria-label", "Thêm “" + t.name + "” vào hàng đợi, danh sách phát hoặc xóa");
   more.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>';
   more.onclick = ev => { ev.stopPropagation(); openAddSheet(t, more); };
-  li.append(th, meta, eq, du, more);
+  li.append(th, meta, eq, du, makeHeart(t), more);
   li.onclick = () => { initAudio(); play(+li.dataset.p, xfOn); };
   li.onkeydown = ev => { if (ev.target === li && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); initAudio(); play(+li.dataset.p, xfOn); } };
   return li;
@@ -1348,6 +1559,7 @@ function markCurrent(scroll) {
 const fmtBytes = n => n >= 1073741824 ? (n / 1073741824).toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " GB"
   : n >= 1048576 ? (n / 1048576).toLocaleString("vi-VN", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " MB" : Math.round(n / 1024) + " KB";
 async function updateStorage() {
+  libChanged();
   const lib = tracks.reduce((s, t) => s + (t.size || (t.blob && t.blob.size) || 0), 0), n = tracks.length;
   let quota = 0, persisted = null;
   try { if (navigator.storage && navigator.storage.estimate) quota = ((await navigator.storage.estimate()) || {}).quota || 0; } catch (e) {}
@@ -1484,8 +1696,8 @@ function playStation(i) {
   initAudio();
   const s = stations[i]; if (!s) return;
   if (!navigator.onLine) { toast("Bạn đang offline, không thể phát radio. Nhạc đã lưu vẫn nghe bình thường.", { ms: 5000 }); return; }
-  cancelRetry();
-  mode = "radio"; stPos = i; retryN = 0; everPlayed = false; triedDirect = false; radioPlayingOk = false; hlsNetErr = hlsMedErr = 0; fading = false;
+  cancelRetry(); ytLeave();
+  mode = "radio"; playToken++; stPos = i; retryN = 0; everPlayed = false; triedDirect = false; radioPlayingOk = false; hlsNetErr = hlsMedErr = 0; fading = false;
   if (ctx.state !== "running") ctx.resume().catch(() => {});
   const t = ctx.currentTime, d = decks[active], o = decks[1 - active];     // cắt cứng, đài mới tăng nhanh trong 300ms
   o.el.pause(); o.g.gain.cancelScheduledValues(t); o.g.gain.setValueAtTime(0, t);
@@ -1537,11 +1749,11 @@ function onStationEnded() {
 }
 /* Sự kiện từ các thẻ audio (gọi từ bindEl ở phần 3) */
 function onMediaEvent(el, ev) {
-  if (el !== activeEl()) return;
+  if (el !== activeEl() || mode === "yt") return;
   if (ev === "loadstart" || ev === "waiting" || ev === "stalled") { if (!userPaused && el.getAttribute("src") && el.src !== SILENT) setLoading(true); }
   else if (ev === "playing" || ev === "canplay" || ev === "emptied" || ev === "error") setLoading(false);
   if (mode !== "radio") {                           // nhạc trong thư viện: file hỏng thì bỏ qua sang bài kế (tối đa 3 lần liên tiếp)
-    if (ev === "playing") errSkip = 0;
+    if (ev === "playing") { errSkip = 0; histOnPlaying(); }
     if (ev === "error" && el.getAttribute("src") && el.src !== SILENT && !userPaused) {
       if (++errSkip <= 3) { toast("Không phát được file này, chuyển sang bài kế tiếp"); setTimeout(() => next(false), 300); } else pauseAll();
     }
@@ -1551,7 +1763,7 @@ function onMediaEvent(el, ev) {
   if (ev === "playing") {
     clearTimeout(connT); clearTimeout(stallT); connT = stallT = 0;
     everPlayed = true; radioPlayingOk = true; retryN = 0; hlsNetErr = hlsMedErr = 0;
-    setRadioStatus(s.kind === "live" ? "Đang phát trực tiếp" : "Đang phát"); $("#retryBtn").classList.add("hidden");
+    setRadioStatus(s.kind === "live" ? "Đang phát trực tiếp" : "Đang phát"); $("#retryBtn").classList.add("hidden"); histOnPlaying();
   } else if (ev === "waiting" || ev === "stalled") {
     if (!stallT) stallT = setTimeout(() => { stallT = 0; drop("stall"); }, 8000);
   } else if (ev === "error") drop("error");
@@ -2045,7 +2257,7 @@ async function requestWake() {
 }
 function releaseWake() { if (wakeLock) { try { wakeLock.release(); } catch (e) {} wakeLock = null; } }
 function syncKeepAlive() {
-  const n = nextAlarmTime(), need = !!(S.keepAlive && n && (ringing || n - Date.now() <= 14 * 3600000));
+  const n = nextAlarmTime(), need = !!(S.keepAlive && n && mode !== "yt" && (ringing || n - Date.now() <= 14 * 3600000));
   if (need) { requestWake(); if (keepEl) { keepEl.loop = true; keepEl.play().catch(() => {}); } keepActive = !!keepEl; }
   else { releaseWake(); if (keepEl) keepEl.pause(); keepActive = false; }
   if ("mediaSession" in navigator && keepActive && !anyPlaying()) {
@@ -2054,6 +2266,7 @@ function syncKeepAlive() {
   const note = $("#wakeNote");
   if (!S.keepAlive) note.textContent = "";
   else if (!n) note.textContent = "Chưa có báo thức nào đang bật.";
+  else if (mode === "yt") note.textContent = "Đang nghe YouTube: tạm dừng chế độ giữ hoạt động (ứng dụng không dùng âm im lặng cùng YouTube).";
   else if (!need) note.textContent = "Sẽ tự bật khi báo thức kế tiếp còn dưới 14 giờ.";
   else note.textContent = "Đang giữ ứng dụng hoạt động" + (navigator.wakeLock ? " và giữ màn hình sáng." : ". Thiết bị này không hỗ trợ giữ màn hình sáng.");
   $("#keepAlive").setAttribute("aria-checked", String(!!S.keepAlive));
@@ -2298,7 +2511,7 @@ function vizDraw(ts, live) {
 function vizFrame(ts) {
   V.raf = 0;
   if (document.hidden || V.rm.matches) return;                             // tab ẩn hoặc giảm chuyển động: dừng hẳn
-  const live = !!(ctx && vizAn && !directOn && anyPlaying());
+  const live = !!(ctx && vizAn && !directOn && elPlaying());
   if (ts - V.last >= (live ? 22 : 33)) { V.last = ts; vizDraw(ts, live); } // khoảng 45 fps khi phát, 30 fps khi nghỉ
   V.raf = requestAnimationFrame(vizFrame);
 }
@@ -2351,11 +2564,12 @@ function initSheets() {
 }
 
 /* ---- Tab thư viện (đúng ARIA tablist, điều khiển bằng bàn phím) ---- */
-const TABS = [["music", "#tabMusic", "#panelMusic"], ["pl", "#tabPl", "#panelPl"], ["radio", "#tabRadio", "#panelRadio"]];
+const TABS = [["music", "#tabMusic", "#panelMusic"], ["rec", "#tabRec", "#panelRec"], ["fav", "#tabFav", "#panelFav"], ["hist", "#tabHist", "#panelHist"], ["pl", "#tabPl", "#panelPl"], ["radio", "#tabRadio", "#panelRadio"], ["yt", "#tabYt", "#panelYt"]];
 function selectTab(name, focusIt) {
   if (!TABS.some(t => t[0] === name)) name = "music";
-  S.tab = name; saveSettings();
+  const prevTab = S.tab; S.tab = name; saveSettings();
   TABS.forEach(a => { const on = a[0] === name, tb = $(a[1]); tb.setAttribute("aria-selected", String(on)); tb.tabIndex = on ? 0 : -1; $(a[2]).hidden = !on; });
+  tabShown(name, prevTab);
   if (focusIt) $(TABS.filter(t => t[0] === name)[0][1]).focus();
 }
 function initTabs() {
@@ -2414,6 +2628,7 @@ const isStandalone = () => (window.matchMedia && window.matchMedia("(display-mod
 function updateNet(announce) {
   const on = navigator.onLine, d = $("#netDot");
   d.classList.toggle("off", !on); d.setAttribute("aria-label", on ? "Đang online" : "Đang offline");
+  $("#offlineBar").classList.toggle("hidden", on); ytNetChanged(on);
   if (announce) toast(on ? "Đã có mạng trở lại" : "Bạn đang offline, nhạc đã lưu vẫn nghe bình thường", { ms: on ? 3500 : 5000 });
 }
 function promptUpdate(worker) {
@@ -2456,15 +2671,16 @@ function boot() {
   $("#vol").value = clamp(+S.vol, 0, 100); fill($("#vol")); fill($("#seek")); fill($("#xfSec")); fill($("#aMaxVol"));
   setCover("", false); setSleep(0); renderToggles(); applyVolume();
   initControls(); initLibraryUI(); initDrop(); initRadioUI(); initSheets(); initTabs(); initViz(); initPwa(); initFx(); initPlaylists();
+  initEq(); initFavs(); initHistory(); initRec(); initYt(); initBackup(); initMini(); initKeyboard();
   selectTab(S.tab); renderList(); renderRadio(); syncPlayBtn();
   /* Lần chạm đầu tiên: tạo AudioContext và mở khóa các thẻ audio trong thao tác người dùng */
   document.addEventListener("click", initAudio, { once: true });
-  tickClock(); setInterval(() => { tickClock(); sleepTick(); if (window.alarmsReady) alarmTick(); }, 1000);
+  tickClock(); setInterval(() => { tickClock(); sleepTick(); histTick(); if (window.alarmsReady) alarmTick(); }, 1000);
   /* Nạp thư viện và danh sách đài TRƯỚC khi khởi tạo báo thức, để báo thức kêu bù lúc mở trang biết nguồn nhạc */
-  Promise.race([loadLibrary().then(loadStations), sleepMs(4000)]).catch(e => console.warn("[khởi động]", e)).then(() => {
+  Promise.race([loadLibrary().then(loadStations).then(loadExtras), sleepMs(4000)]).catch(e => console.warn("[khởi động]", e)).then(() => {
     initAlarms(); window.alarmsReady = true; renderPlaylists();
     const q = new URLSearchParams(location.search);
-    if (q.get("tab") === "radio") selectTab("radio");
+    if (TABS.some(t => t[0] === q.get("tab"))) selectTab(q.get("tab"));
     if (q.get("open") === "alarm") openAlarmSheet();
   });
 }
@@ -2527,7 +2743,7 @@ function initFx() {
   $("#bass").oninput = e => { S.bass = +e.target.value; saveSettings(); applyFx(); };
   $("#treble").oninput = e => { S.treble = +e.target.value; saveSettings(); applyFx(); };
   $$("#spacePills button").forEach(b => b.onclick = () => { S.space = b.dataset.m; saveSettings(); initAudio(); applyFx(); });
-  $("#eqReset").onclick = () => { S.bass = 0; S.treble = 0; S.space = "off"; saveSettings(); applyFx(); };
+  $("#eqReset").onclick = () => { S.bass = 0; S.treble = 0; S.space = "off"; S.eq = [0, 0, 0, 0, 0]; saveSettings(); applyFx(); applyEq(); };
   applyFx();
 }
 
@@ -2576,7 +2792,7 @@ function mkRow(o) {
   if (o.sub) { const s = document.createElement("div"); s.className = "tsub"; s.textContent = o.sub; m.appendChild(s); }
   li.append(th, m);
   (o.btns || []).forEach(b => {
-    const x = document.createElement("button"); x.type = "button"; x.className = "rowbtn"; x.setAttribute("aria-label", b.label); x.innerHTML = b.icon; x.disabled = !!b.disabled;
+    const x = document.createElement("button"); x.type = "button"; x.className = "rowbtn" + (b.cls ? " " + b.cls : ""); x.setAttribute("aria-label", b.label); x.innerHTML = b.icon; x.disabled = !!b.disabled;
     x.onclick = ev => { ev.stopPropagation(); b.fn(); }; li.appendChild(x);
   });
   li.onclick = o.onClick;
@@ -2643,7 +2859,7 @@ function renderAddPls() {
 }
 function openAddSheet(t, opener) {
   addTarget = t; $("#addTrack").textContent = t.name; $("#addPlName").value = ""; $("#addPlErr").textContent = "";
-  renderAddPls(); openSheet("#sheetAdd", opener);
+  renderAddPls(); favAddBtnSync(t); openSheet("#sheetAdd", opener);
 }
 function initPlaylists() {
   const raw = lsGet(PLKEY, []);
@@ -2674,6 +2890,840 @@ function initPlaylists() {
     if (confirm("Xóa bài “" + t.name + "” khỏi thư viện?")) { closeSheet(); removeAt(order.indexOf(tracks.indexOf(t))); }
   };
   renderPlaylists();
+}
+
+/* ================================================================
+   PHẦN 9 (v3): YÊU THÍCH, LỊCH SỬ, GỢI Ý, EQ 5 DẢI, MINI PLAYER
+   ================================================================ */
+let playToken = 0;                                  // tăng mỗi lần người dùng thực sự bắt đầu một lượt nghe mới (chống ghi lịch sử trùng)
+const NN_APP = "Nguyễn Nhật Player", BK_FORMAT = 1;
+const localKey = t => "l:" + (t.fp || "id:" + t.id);
+const findTrackByKey = key => tracks.find(t => localKey(t) === key || ("l:id:" + t.id) === key) || null;
+const localInfo = t => ({ key: localKey(t), type: "local", name: t.name, folder: t.folder || "", fp: t.fp || "", t });
+const srcLabel = ty => ty === "local" ? "Thư viện" : ty === "stream" ? "Radio / URL" : "YouTube";
+/* Bảo đảm bài có dấu vân tay ổn định (bản ghi cũ có thể chưa có) */
+async function ensureFp(t) {
+  if (t.fp) return t.fp;
+  try { t.fp = await fingerprint(t.blob); t.size = t.blob.size || 0; fpSet.add(t.fp); await dbPatch(t.id, { fp: t.fp, size: t.size }); } catch (e) { t.fp = ""; }
+  return t.fp;
+}
+/* Mô tả mục đang phát (thư viện / radio / YouTube) */
+function itemInfo() {
+  const t = curTrack(); if (!t) return null;
+  if (mode === "lib") return localInfo(t);
+  if (mode === "radio") return { key: "s:" + t.url, type: "stream", name: t.name, folder: t.host || "", url: t.url, kind: t.kind, hls: !!t.hls, host: t.host || "" };
+  if (mode === "yt") return { key: "y:" + t.videoId, type: "youtube", name: t.name, folder: "YouTube", videoId: t.videoId, url: t.url };
+  return null;
+}
+function relTime(ts) {
+  const d = new Date(ts), now = new Date(), diff = (now - d) / 60000, hm = pad(d.getHours()) + ":" + pad(d.getMinutes());
+  if (diff < 1) return "Vừa xong";
+  if (diff < 60) return Math.floor(diff) + " phút trước";
+  const day0 = x => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime(), dd = Math.round((day0(now) - day0(d)) / 864e5);
+  if (dd === 0) return "Hôm nay " + hm;
+  if (dd === 1) return "Hôm qua " + hm;
+  return pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + d.getFullYear() + " " + hm;
+}
+function playLocal(t) {
+  initAudio();
+  const p = order.indexOf(tracks.indexOf(t));
+  if (p < 0) { toast("Bài này không còn trong thư viện"); return; }
+  play(p, xfOn);
+}
+/* Phát một danh sách bài: bài đầu phát ngay, các bài còn lại nằm trong hàng đợi */
+function playTrackList(items, ctxId) {
+  items = items.filter(Boolean);
+  if (!items.length) { toast("Không có bài nào để phát"); return; }
+  initAudio();
+  const first = items.shift();
+  queue = items; hist = []; plCtx = { id: ctxId || "__list", shuffle: false }; queuedNow = first;
+  startTrack(first, false);
+}
+/* Phát lại một mục từ ảnh chụp (snapshot) của Yêu thích / Lịch sử */
+function playSnap(s) {
+  initAudio();
+  if (s.type === "local") { const t = findTrackByKey(s.key); if (!t) { toast("Bài này không còn trong thư viện"); return; } playLocal(t); }
+  else if (s.type === "stream") {
+    const i = stations.findIndex(x => x.url === s.url);
+    if (i >= 0) playStation(i);
+    else toast("Đài này đã bị xóa khỏi danh sách Radio", { action: "Thêm lại", ms: 6000, onAction: async () => { const r = await addStation({ kind: s.kind === "file" ? "file" : "live", name: s.name, url: s.url, hls: !!s.hls, host: s.host || "" }); if (r) playStation(stations.indexOf(r)); } });
+  } else if (s.type === "youtube") { selectTab("yt"); ytLoad(s.videoId, { name: s.name }); }
+}
+let libT = 0;
+function libChanged() { clearTimeout(libT); libT = setTimeout(() => { renderFavs(); renderHist(); renderRec(); favSync(); miniUpdate(); }, 60); }
+
+/* ---- Yêu thích ---- */
+let favs = new Map();                               // key -> bản ghi
+const FAV_ICON = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+const infoFav = info => !!info && (favs.has(info.key) || (info.type === "local" && !!info.fp && favs.has("l:" + info.fp)));
+async function toggleFav(info) {
+  if (!info) { toast("Hãy phát một mục trước khi thêm vào Yêu thích"); return; }
+  let key = info.key;
+  if (info.type === "local" && info.t) { await ensureFp(info.t); key = localKey(info.t); }
+  if (favs.has(key)) { favs.delete(key); await dbDel(key, "favorites"); toast("Đã bỏ khỏi Yêu thích"); }
+  else {
+    const rec = { key, type: info.type, name: info.name, folder: info.folder || "", addedAt: Date.now(), fp: info.fp || (info.t && info.t.fp) || "", url: info.url || "", videoId: info.videoId || "", kind: info.kind || "", hls: !!info.hls, host: info.host || "" };
+    favs.set(key, rec);
+    if (db) { const r = await dbPutRecs("favorites", [rec]); if (!r.ok) { favs.delete(key); toast(r.quota ? "Bộ nhớ trình duyệt đã đầy" : "Không lưu được mục yêu thích"); favSync(); return; } } else warnNoDb();
+    toast("Đã thêm vào Yêu thích");
+  }
+  favSync(); renderFavs(); renderRec();
+}
+async function removeFav(key) { favs.delete(key); await dbDel(key, "favorites"); favSync(); renderFavs(); renderRec(); }
+function makeHeart(t) {
+  const b = document.createElement("button"); b.type = "button"; b.className = "rowbtn heart"; b._t = t; b.innerHTML = FAV_ICON;
+  b.setAttribute("aria-pressed", String(favs.has(localKey(t)))); b.setAttribute("aria-label", "Yêu thích “" + t.name + "”");
+  b.onclick = ev => { ev.stopPropagation(); toggleFav(localInfo(t)); };
+  return b;
+}
+function favSync() {
+  const info = itemInfo(), on = infoFav(info), b = $("#favBtn");
+  b.setAttribute("aria-pressed", String(on)); b.setAttribute("aria-label", on ? "Bỏ khỏi Yêu thích" : "Thêm vào Yêu thích"); b.disabled = !info;
+  $$("#list .heart").forEach(h => h.setAttribute("aria-pressed", String(!!h._t && favs.has(localKey(h._t)))));
+  if (addTarget) favAddBtnSync(addTarget);
+}
+function favAddBtnSync(t) { const b = $("#addFav"); if (b) b.textContent = favs.has(localKey(t)) ? "Bỏ khỏi Yêu thích" : "Thêm vào Yêu thích"; }
+function renderFavs() {
+  const ul = $("#favList"); if (!ul) return;
+  ul.textContent = "";
+  const list = Array.from(favs.values()).sort((a, b) => b.addedAt - a.addedAt);
+  $("#favPlayAll").disabled = !list.some(f => f.type === "local" && findTrackByKey(f.key));
+  if (!list.length) { ul.appendChild(emptyState("Chưa có mục yêu thích. Bấm trái tim ở trình phát hoặc cạnh bài hát để thêm.")); return; }
+  list.forEach(f => {
+    const gone = f.type === "local" && !findTrackByKey(f.key);
+    ul.appendChild(mkRow({ name: f.name, sub: srcLabel(f.type) + (f.folder && f.folder !== srcLabel(f.type) ? " · " + f.folder : "") + (gone ? " · Không còn trong thư viện" : ""), label: "Phát " + f.name,
+      onClick: () => playSnap(f), btns: [{ label: "Bỏ khỏi Yêu thích", icon: FAV_ICON, cls: "heart-on", fn: () => removeFav(f.key) }] }));
+  });
+}
+
+/* ---- Lịch sử nghe ---- */
+let hRecs = [], hCur = null, shownHist = 100;
+const HIST_MAX = 500;
+/* Gọi khi âm thanh THỰC SỰ bắt đầu phát (sự kiện "playing"). Cùng một lượt (playToken) thì bỏ qua: tạm dừng/tiếp tục không tạo bản ghi mới */
+function histOnPlaying() {
+  const info = itemInfo(); if (!info) return;
+  if (hCur && hCur.token === playToken && hCur.key === info.key) return;
+  histFlush();
+  hCur = { token: playToken, key: info.key, info, recId: null, adding: false, listened: 0, lastT: null, flushT: 0, ts: Date.now() };
+}
+async function histCreate(c) {
+  c.adding = true; const info = c.info;
+  if (info.type === "local" && info.t) { await ensureFp(info.t); info.key = localKey(info.t); info.fp = info.t.fp; c.key = info.key; }
+  const rec = { key: info.key, type: info.type, name: info.name, folder: info.folder || "", source: srcLabel(info.type), ts: c.ts, listened: Math.round(c.listened),
+    url: info.url || "", videoId: info.videoId || "", kind: info.kind || "", hls: !!info.hls, host: info.host || "", fp: info.fp || "" };
+  let id = null;
+  if (db) { const r = await dbAdd("history", [rec]); if (r.ok) id = r.id; else if (r.quota) toast("Bộ nhớ đã đầy, không ghi được lịch sử"); }
+  if (id == null) id = --memId;
+  rec.id = id; c.recId = id; c.flushT = Date.now(); hRecs.unshift(rec);
+  if (hRecs.length > HIST_MAX) { hRecs.splice(HIST_MAX).forEach(x => { if (x.id > 0) dbDel(x.id, "history"); }); }
+  renderHist(); renderRec();
+}
+function histFlush() {
+  const c = hCur; if (!c || !c.recId) return;
+  const v = Math.round(c.listened), r = hRecs.find(x => x.id === c.recId);
+  if (r) r.listened = v;
+  if (c.recId > 0) dbPatch(c.recId, { listened: v }, "history");
+  c.flushT = Date.now();
+}
+/* Gọi mỗi giây: cộng dồn thời lượng nghe thật (chỉ khi đang phát) và chỉ ghi bản ghi sau khi nghe đủ 3 giây */
+function histTick() {
+  const c = hCur; if (!c) return;
+  const info = itemInfo(), same = !!info && c.token === playToken && info.key === c.key, now = Date.now();
+  if (!same) { histFlush(); hCur = null; return; }
+  if (!anyPlaying()) { if (c.lastT) { c.lastT = null; histFlush(); } return; }
+  if (c.lastT) c.listened += Math.min(120, (now - c.lastT) / 1000);
+  c.lastT = now;
+  if (!c.recId && !c.adding && c.listened >= 3) histCreate(c);
+  else if (c.recId && now - c.flushT > 20000) histFlush();
+}
+function renderHist() {
+  const ul = $("#histList"); if (!ul) return;
+  ul.textContent = "";
+  $("#histClear").disabled = !hRecs.length;
+  if (!hRecs.length) { ul.appendChild(emptyState("Chưa có lịch sử nghe. Phát một bài, lịch sử sẽ hiện ở đây.")); return; }
+  hRecs.slice(0, shownHist).forEach(h => {
+    const gone = h.type === "local" && !findTrackByKey(h.key);
+    const parts = [h.source || srcLabel(h.type), relTime(h.ts)];
+    if (h.listened > 0) parts.push("nghe " + fmt(h.listened));
+    if (gone) parts.push("Không còn trong thư viện");
+    ul.appendChild(mkRow({ name: h.name, sub: parts.join(" · "), label: "Phát lại " + h.name, onClick: () => playSnap(h),
+      btns: [{ label: "Xóa khỏi lịch sử", icon: trashIcon, fn: () => histDel(h.id) }] }));
+  });
+  if (hRecs.length > shownHist) {
+    const li = document.createElement("li"), b = document.createElement("button");
+    li.setAttribute("role", "presentation"); b.className = "pill more"; b.type = "button"; b.textContent = "Hiện thêm (" + (hRecs.length - shownHist) + " mục)";
+    b.onclick = () => { shownHist += 100; renderHist(); };
+    li.appendChild(b); ul.appendChild(li);
+  }
+}
+function histDel(id) { hRecs = hRecs.filter(x => x.id !== id); if (hCur && hCur.recId === id) hCur.recId = null; if (id > 0) dbDel(id, "history"); renderHist(); renderRec(); }
+function histClearAll() {
+  if (!hRecs.length || !confirm("Xóa toàn bộ lịch sử nghe? (Nhạc và yêu thích không bị ảnh hưởng)")) return;
+  hRecs = []; if (hCur) hCur.recId = null; dbClearStore("history"); renderHist(); renderRec();
+}
+
+/* ---- Gợi ý "Dành cho bạn": thuật toán chạy cục bộ, chỉ dùng dữ liệu thật trong thư viện ----
+   Điểm = độ gần gu (cùng thư mục / từ khóa trong tên với bài đã yêu thích hoặc nghe nhiều)
+        + yêu thích + thưởng bài chưa nghe / lâu chưa nghe − phạt bài vừa nghe trong 24 giờ. */
+const REC_STOP = new Set(["official", "audio", "video", "lyrics", "lyric", "music", "feat", "with", "from", "track", "the", "and"]);
+const tokensOf = s => { const o = []; norm(s).split(/[^a-z0-9]+/).forEach(w => { if (w.length >= 3 && !REC_STOP.has(w) && o.indexOf(w) < 0) o.push(w); }); return o; };
+let recSeed = "s0", recDirty = true, recList = [];
+function computeRecs() {
+  const now = Date.now(), st = new Map(), fw = new Map(), tw = new Map();
+  const bump = (m, k, w) => m.set(k, (m.get(k) || 0) + w);
+  const taste = (name, folder, w) => { if (folder) bump(fw, norm(folder), w); tokensOf(name).forEach(k => bump(tw, k, w)); };
+  hRecs.forEach(h => {
+    if (h.type !== "local") return;
+    const w = Math.min(2, 0.5 + (h.listened || 0) / 120), s = st.get(h.key) || { plays: 0, last: 0, w: 0 };
+    s.plays++; s.last = Math.max(s.last, h.ts); s.w += w; st.set(h.key, s); taste(h.name, h.folder, w);
+  });
+  favs.forEach(f => { if (f.type === "local") taste(f.name, f.folder, 3); });
+  const out = [];
+  tracks.forEach(t => {
+    const key = localKey(t), s = st.get(key), isFav = favs.has(key), own = (isFav ? 3 : 0) + (s ? s.w : 0), fo = t.folder ? norm(t.folder) : "";
+    const fAff = fo ? Math.max(0, (fw.get(fo) || 0) - own) : 0;           // trừ phần do chính bài này đóng góp
+    let tAff = 0; tokensOf(t.name).forEach(k => { tAff += Math.min(4, Math.max(0, (tw.get(k) || 0) - own)); });
+    const hrs = s ? (now - s.last) / 3.6e6 : Infinity;
+    let score = Math.min(6, fAff * 0.5) + Math.min(4, tAff * 0.3) + (isFav ? 2 : 0) + (s ? Math.log2(1 + s.plays) * 0.4 : 0);
+    if (!s) score += 2.5; else if (hrs < 6) score -= 4; else if (hrs < 24) score -= 2; else score += Math.min(3, hrs / 120);
+    score += (hashStr(key + recSeed) % 1000) / 1000 * 0.8;                 // xáo nhẹ, đổi khi bấm "Làm mới"
+    let why;
+    if (isFav && !s) why = "Yêu thích · chưa nghe lần nào";
+    else if (isFav && hrs > 72) why = "Yêu thích · lâu chưa nghe";
+    else if (fAff >= 2 && t.folder) why = "Cùng thư mục “" + t.folder + "”";
+    else if (tAff >= 1) why = "Giống gu nghe của bạn";
+    else if (!s) why = "Chưa nghe lần nào";
+    else why = "Lâu chưa nghe";
+    out.push({ t, score, why });
+  });
+  out.sort((a, b) => b.score - a.score);
+  return out.slice(0, 25);
+}
+function renderRec() {
+  recDirty = true;
+  if (S.tab !== "rec") return;                      // chỉ tính khi đang xem tab này
+  recDirty = false;
+  const ul = $("#recList"); ul.textContent = "";
+  recList = computeRecs();
+  $("#recPlay").disabled = !recList.length;
+  $("#recNote").textContent = !tracks.length ? "" : (hRecs.length || favs.size ? "Gợi ý dựa trên yêu thích và lịch sử nghe của bạn." : "Chưa có yêu thích hoặc lịch sử, đang ưu tiên bài bạn chưa nghe. Nghe và thả tim để gợi ý sát gu hơn.");
+  if (!recList.length) { ul.appendChild(emptyState("Thêm nhạc vào thư viện để nhận gợi ý “Dành cho bạn”.")); return; }
+  recList.forEach(r => ul.appendChild(mkRow({ name: r.t.name, sub: r.why, label: "Phát " + r.t.name, onClick: () => playLocal(r.t) })));
+}
+
+/* ---- Equalizer 5 dải (BiquadFilterNode, nằm trong chuỗi âm thanh hiện có: treble -> EQ -> không gian) ---- */
+const EQ_BANDS = [{ f: 60, type: "lowshelf", q: 0.7 }, { f: 230, type: "peaking", q: 1 }, { f: 910, type: "peaking", q: 1 }, { f: 3600, type: "peaking", q: 1 }, { f: 14000, type: "highshelf", q: 0.7 }];
+let eqF = [];
+function buildEq(inNode, outNode) {
+  eqF = EQ_BANDS.map(b => { const f = ctx.createBiquadFilter(); f.type = b.type; f.frequency.value = b.f; f.Q.value = b.q; f.gain.value = 0; return f; });
+  let prev = inNode; eqF.forEach(f => { prev.connect(f); prev = f; }); prev.connect(outNode);
+}
+function applyEq() {
+  const g = Array.isArray(S.eq) ? S.eq.slice(0, 5) : []; while (g.length < 5) g.push(0);
+  S.eq = g.map(v => clamp(Math.round(+v || 0), -12, 12)); S.eqOn = S.eqOn !== false;
+  S.eq.forEach((v, i) => { $("#eq" + i).value = v; fill($("#eq" + i)); $("#eqOut" + i).textContent = (v > 0 ? "+" : "") + v + " dB"; });
+  const on = $("#eqOn"); on.setAttribute("aria-pressed", String(S.eqOn)); on.textContent = "EQ: " + (S.eqOn ? "bật" : "tắt");
+  if (ctx && eqF.length) { const t = ctx.currentTime; eqF.forEach((f, i) => f.gain.setTargetAtTime(S.eqOn ? S.eq[i] : 0, t, 0.05)); }
+  eqStatus();
+}
+/* Báo đúng thực tế: EQ chỉ có tác dụng khi âm thanh đi qua chuỗi Web Audio của ứng dụng */
+function eqStatus() {
+  const n = $("#eqNote"); if (!n) return;
+  let t;
+  if (mode === "yt") t = "Đang nghe YouTube: EQ không áp dụng (âm thanh YouTube phát trong trình phát nhúng riêng, ứng dụng không truy cập được).";
+  else if (mode === "radio" && directOn) t = "Radio đang ở chế độ trực tiếp (máy chủ không cho phép xử lý âm thanh): EQ không áp dụng.";
+  else if (!S.eqOn) t = "EQ đang tắt.";
+  else if (!ctx || !elPlaying()) t = "EQ sẽ áp dụng cho nhạc trong thư viện và radio xử lý được. Không áp dụng cho YouTube hay radio ở chế độ trực tiếp.";
+  else t = "EQ đang áp dụng cho nguồn đang phát.";
+  n.textContent = t;
+}
+function initEq() {
+  for (let i = 0; i < 5; i++) $("#eq" + i).oninput = e => { S.eq = (Array.isArray(S.eq) ? S.eq : [0, 0, 0, 0, 0]).slice(); S.eq[i] = +e.target.value; saveSettings(); applyEq(); };
+  $("#eqOn").onclick = () => { S.eqOn = !(S.eqOn !== false); saveSettings(); applyEq(); };
+  $("#eqBandsReset").onclick = () => { S.eq = [0, 0, 0, 0, 0]; saveSettings(); applyEq(); };
+  applyEq();
+}
+
+/* ---- Mini player: chỉ điều khiển lại NGUỒN ĐANG PHÁT, không có audio riêng ---- */
+let miniDismissed = false, miniKey = "";
+function miniUpdate() {
+  const el = $("#mini"), t = curTrack(), info = itemInfo(), k = info ? info.key : "";
+  if (k !== miniKey) { miniKey = k; miniDismissed = false; }
+  const show = !!t && !miniDismissed;
+  el.classList.toggle("hidden", !show); document.body.classList.toggle("has-mini", show);
+  if (!t) return;
+  $("#miniTitle").textContent = t.name;
+  $("#miniSub").textContent = mode === "yt" ? "YouTube" : mode === "radio" ? "Radio trực tuyến" : (t.folder || "Nhạc của tôi");
+  const th = $("#miniThumb"); th.style.background = gradOf(t.name); th.textContent = initialOf(t.name);
+  const pl = anyPlaying(), pb = $("#miniPlay");
+  pb.innerHTML = pl ? PAUSE_SVG : PLAY_SVG; pb.setAttribute("aria-label", pl ? "Tạm dừng" : "Phát");
+  const few = mode === "yt" ? ytLinks.length < 2 : mode === "radio" ? stations.length < 2 : false;
+  $("#miniPrev").disabled = few; $("#miniNext").disabled = few;
+  if (isLive() || mode === "radio") $("#miniBar").style.width = "0%";
+}
+function miniProg(c, d) { $("#miniBar").style.width = d > 0 && isFinite(d) ? Math.min(100, c / d * 100) + "%" : "0%"; }
+function initMini() {
+  $("#miniPlay").onclick = togglePlay;
+  $("#miniPrev").onclick = () => { initAudio(); prev(); };
+  $("#miniNext").onclick = () => { initAudio(); next(xfOn); };
+  $("#miniOpen").onclick = () => { const rm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches; $("#player").scrollIntoView({ behavior: rm ? "auto" : "smooth", block: "start" }); };
+  $("#miniClose").onclick = () => { miniDismissed = true; miniUpdate(); };
+}
+/* Bàn phím ảo: nâng bottom sheet lên trên bàn phím (iOS Safari không tự co khung nhìn) */
+function initKeyboard() {
+  const vv = window.visualViewport;
+  if (vv) {
+    const upd = () => {
+      const kb = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)), open = kb > 120;
+      document.documentElement.style.setProperty("--kb", (open ? kb : 0) + "px");
+      document.body.classList.toggle("kb-open", open);
+    };
+    vv.addEventListener("resize", upd); vv.addEventListener("scroll", upd);
+  }
+  document.addEventListener("focusin", e => {
+    const t = e.target;
+    if (t && /^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName) && t.closest && t.closest(".sheet")) setTimeout(() => { try { t.scrollIntoView({ block: "center" }); } catch (x) {} }, 320);
+  });
+}
+function initFavs() {
+  $("#favBtn").onclick = () => toggleFav(itemInfo());
+  $("#favPlayAll").onclick = () => playTrackList(Array.from(favs.values()).sort((a, b) => b.addedAt - a.addedAt).filter(f => f.type === "local").map(f => findTrackByKey(f.key)), "__fav");
+  $("#addFav").onclick = () => { const t = addTarget; if (!t) return; toggleFav(localInfo(t)).then(() => favAddBtnSync(t)); };
+}
+function initHistory() { $("#histClear").onclick = histClearAll; window.addEventListener("pagehide", histFlush); document.addEventListener("visibilitychange", () => { if (document.hidden) histFlush(); }); }
+function initRec() {
+  $("#recRefresh").onclick = () => { recSeed = "s" + Math.random().toString(36).slice(2, 6); renderRec(); };
+  $("#recPlay").onclick = () => playTrackList(recList.map(r => r.t), "__rec");
+}
+
+/* ================================================================
+   PHẦN 10 (v3): TAB YOUTUBE (IFrame Player API chính thức)
+   - Chỉ phát bằng trình phát nhúng của YouTube. Không tải video, không tách âm thanh, không proxy,
+     không dùng âm im lặng hay mẹo nào để giữ phát nền. Âm thanh YouTube là nguồn độc lập,
+     EQ / sóng nhạc / cân bằng âm lượng của ứng dụng KHÔNG xử lý được âm thanh này.
+   ================================================================ */
+const YT_HOSTS = ["youtube.com", "www.youtube.com", "m.youtube.com", "music.youtube.com", "youtu.be", "www.youtu.be"];
+const YT_ID = /^[A-Za-z0-9_-]{11}$/;
+let ytP = null, ytReady = false, ytApiP = null, ytCur = null, ytState = -2, ytStatusText = "", ytLoadTok = 0, ytAutoT = 0, ytErr = 0, ytCreatedId = "", ytLinks = [], ytTimer = 0;
+/* Kiểm tra hostname và mã video, từ chối mọi địa chỉ khác (kể cả javascript:, data:) */
+function parseYoutubeUrl(raw) {
+  raw = String(raw || "").trim();
+  if (!raw) return { error: "Hãy dán liên kết YouTube." };
+  if (/\s/.test(raw)) return { error: "Liên kết không được chứa khoảng trắng." };
+  if (!/^[a-z][a-z0-9+.-]*:/i.test(raw)) raw = "https://" + raw;           // cho phép dán thiếu https://
+  let u; try { u = new URL(raw); } catch (e) { return { error: "Liên kết không đúng định dạng." }; }
+  if (u.protocol !== "https:" && u.protocol !== "http:") return { error: "Chỉ chấp nhận liên kết http(s) của YouTube." };
+  if (u.username || u.password) return { error: "Liên kết không hợp lệ." };
+  const host = u.hostname.toLowerCase();
+  if (YT_HOSTS.indexOf(host) < 0) return { error: "Đây không phải liên kết YouTube hợp lệ (youtube.com hoặc youtu.be)." };
+  const parts = u.pathname.split("/").filter(Boolean);
+  let id = "";
+  if (host.indexOf("youtu.be") >= 0) id = parts[0] || "";
+  else if (parts[0] === "watch") id = u.searchParams.get("v") || "";
+  else if (["shorts", "live", "embed"].indexOf(parts[0]) >= 0) id = parts[1] || "";
+  if (!YT_ID.test(id)) return { error: "Không tìm thấy mã video hợp lệ trong liên kết." };
+  return { id, url: "https://www.youtube.com/watch?v=" + id };
+}
+const ytPlaying = () => mode === "yt" && ytState === 1;
+const ytDurSec = () => { try { const d = ytReady && mode === "yt" ? ytP.getDuration() : 0; return isFinite(d) && d > 0 ? d : 0; } catch (e) { return 0; } };
+const ytCurrentSec = () => { try { return ytReady ? ytP.getCurrentTime() || 0 : 0; } catch (e) { return 0; } };
+function setYtMsg(t, cls) { const e = $("#ytMsg"); if (!e) return; e.textContent = t; e.className = "status-line" + (cls ? " " + cls : ""); }
+/* Tải API chính thức một lần, bất đồng bộ, có timeout 15 giây; lỗi thì cho phép thử lại */
+function loadYtApi() {
+  if (window.YT && window.YT.Player) return Promise.resolve(window.YT);
+  if (ytApiP) return ytApiP;
+  if (!navigator.onLine) return Promise.reject(new Error("offline"));
+  ytApiP = new Promise((res, rej) => {
+    const prev = window.onYouTubeIframeAPIReady; let done = false, sc = null;
+    const to = setTimeout(() => { if (done) return; done = true; window.onYouTubeIframeAPIReady = prev; if (sc) sc.remove(); rej(new Error("timeout")); }, 15000);
+    window.onYouTubeIframeAPIReady = () => { if (done) return; done = true; clearTimeout(to); if (typeof prev === "function") { try { prev(); } catch (e) {} } res(window.YT); };
+    sc = document.createElement("script"); sc.src = "https://www.youtube.com/iframe_api"; sc.async = true;
+    sc.onerror = () => { if (done) return; done = true; clearTimeout(to); sc.remove(); window.onYouTubeIframeAPIReady = prev; rej(new Error("load")); };
+    document.head.appendChild(sc);
+  }).catch(e => { ytApiP = null; throw e; });
+  return ytApiP;
+}
+/* Chuyển nguồn sang YouTube: dừng nhạc nội bộ và radio trước, tránh hai nguồn phát chồng */
+function enterYt(id, name) {
+  if (mode === "radio") leaveRadio();
+  userPaused = true; fading = false; cancelRetry();
+  decks.forEach(d => d.el.pause()); if (directEl) directEl.pause();
+  mode = "yt"; playToken++;
+  const saved = ytLinks.find(l => l.videoId === id);
+  ytCur = { kind: "yt", videoId: id, url: "https://www.youtube.com/watch?v=" + id, name: name || (saved && saved.title) || "Video YouTube", dur: 0 };
+  ytState = -1; ytErr = 0; ytStatusText = "Đang tải YouTube...";
+  refreshNow();
+}
+/* Rời YouTube khi người dùng chọn nguồn khác (được gọi từ startTrack / playStation) */
+function ytLeave() {
+  ytLoadTok++; clearTimeout(ytAutoT);
+  if (mode === "yt") { ytPause(); ytState = 2; ytStatusText = ""; }
+}
+function ytPause() { if (ytP && ytReady && (ytState === 1 || ytState === 3)) { try { ytP.pauseVideo(); } catch (e) {} } }
+function armYtAuto() {
+  clearTimeout(ytAutoT);
+  ytAutoT = setTimeout(() => { if (mode === "yt" && ytState !== 1 && ytState !== 3 && !ytErr) setYtMsg("Trình duyệt chặn tự phát. Hãy bấm nút phát trên video hoặc nút “Phát” bên dưới.", "bad"); }, 4500);
+}
+async function ytLoad(id, o) {
+  o = o || {};
+  const my = ++ytLoadTok;
+  setYtMsg("");
+  if (!YT_ID.test(id)) { setYtMsg("Mã video không hợp lệ.", "bad"); return false; }
+  if (!navigator.onLine) { setYtMsg("Bạn đang offline. YouTube cần Internet; danh sách liên kết đã lưu vẫn xem được.", "bad"); return false; }
+  if (S.tab !== "yt") selectTab("yt");                // video chỉ được phát khi trình phát đang hiển thị
+  setYtMsg("Đang tải trình phát YouTube...");
+  let YT;
+  try { YT = await loadYtApi(); }
+  catch (e) { if (my === ytLoadTok) setYtMsg(e && e.message === "offline" ? "Bạn đang offline. YouTube cần Internet." : "Không tải được trình phát YouTube. Hãy kiểm tra kết nối Internet rồi bấm “Phát” lại.", "bad"); return false; }
+  if (my !== ytLoadTok) return false;                 // người dùng đã chọn nguồn khác trong lúc chờ
+  setYtMsg("");
+  enterYt(id, o.name);
+  try {
+    if (!ytP) {
+      const vars = { playsinline: 1, rel: 0, modestbranding: 1, autoplay: 1 };
+      if (/^https?:$/.test(location.protocol)) vars.origin = location.origin;
+      ytReady = false; ytCreatedId = id;
+      ytP = new YT.Player("ytMount", { width: "100%", height: "100%", videoId: id, playerVars: vars, events: { onReady: ytOnReady, onStateChange: ytOnState, onError: ytOnError } });
+    } else if (ytReady) { ytP.loadVideoById(id); }
+    else ytCreatedId = "";                            // chưa sẵn sàng: onReady sẽ nạp video hiện tại
+  } catch (e) { console.warn("[yt]", e); setYtMsg("Không khởi tạo được trình phát YouTube.", "bad"); return false; }
+  armYtAuto();
+  return true;
+}
+function ytOnReady() {
+  ytReady = true; ytApplyVolume();
+  if (ytCur && ytCur.videoId !== ytCreatedId) { try { ytP.loadVideoById(ytCur.videoId); } catch (e) {} }
+  ytTitle();
+}
+function ytOnState(e) {
+  const st = e.data; ytState = st;
+  if (st === 1) { clearTimeout(ytAutoT); ytErr = 0; setYtMsg(""); ytStatusText = "Đang phát"; ytTitle(); histOnPlaying(); }
+  else if (st === 2) { ytStatusText = "Đã tạm dừng"; ytTitle(); }
+  else if (st === 0) ytStatusText = "Đã phát xong";
+  else if (st === 3) ytStatusText = "Đang tải...";
+  else if (st === 5) { ytStatusText = "Sẵn sàng, bấm Phát"; ytTitle(); }
+  if (mode === "yt") syncPlayBtn();
+  ytUiSync();
+}
+const YT_ERRS = { 2: "Mã video không hợp lệ.", 5: "Trình phát YouTube gặp lỗi. Hãy thử tải lại.", 100: "Video đã bị xóa hoặc đang ở chế độ riêng tư.",
+  101: "Chủ sở hữu video không cho phép phát nhúng. Hãy dùng “Mở trong YouTube”.", 150: "Chủ sở hữu video không cho phép phát nhúng. Hãy dùng “Mở trong YouTube”.",
+  153: "YouTube không nhận diện được trang nhúng. Hãy mở ứng dụng qua https:// hoặc dùng “Mở trong YouTube”." };
+function ytOnError(e) {
+  ytErr = e.data || -1; clearTimeout(ytAutoT); ytStatusText = "Không phát được";
+  setYtMsg(YT_ERRS[ytErr] || "Không phát được video (mã lỗi " + ytErr + "). Hãy thử “Mở trong YouTube”.", "bad");
+  if (mode === "yt") syncPlayBtn();
+  ytUiSync();
+}
+/* Lấy tên video từ API (getVideoData) khi đã có */
+function ytTitle() {
+  if (!ytP || !ytReady || !ytCur) return;
+  try {
+    const vd = ytP.getVideoData();
+    if (vd && vd.title && vd.video_id === ytCur.videoId && vd.title !== ytCur.name) {
+      ytCur.name = vd.title;
+      const l = ytLinks.find(x => x.videoId === ytCur.videoId);
+      if (l && l.title !== vd.title) { l.title = vd.title; dbPatch(l.videoId, { title: vd.title }, "yt"); renderYtList(); }
+      if (mode === "yt") refreshNow();
+    }
+  } catch (e) {}
+}
+function ytResume() {
+  if (!ytCur) return;
+  if (S.tab !== "yt") selectTab("yt");
+  if (!ytP || !ytReady) { ytLoad(ytCur.videoId, { name: ytCur.name }); return; }
+  if (!navigator.onLine) { setYtMsg("Bạn đang offline. YouTube cần Internet.", "bad"); return; }
+  try { ytP.playVideo(); } catch (e) {}
+  armYtAuto();
+}
+function ytStep(d) {
+  const i = ytCur ? ytLinks.findIndex(l => l.videoId === ytCur.videoId) : -1;
+  if (ytLinks.length < 2 || i < 0) { toast("Hãy lưu thêm liên kết YouTube để chuyển video"); return; }
+  const n = ytLinks[(i + d + ytLinks.length) % ytLinks.length]; ytLoad(n.videoId, { name: n.title });
+}
+function ytSeekTo(sec) { if (ytP && ytReady && isFinite(sec)) { try { ytP.seekTo(Math.max(0, sec), true); } catch (e) {} } }
+function ytApplyVolume() {
+  if (!ytP || !ytReady) return;
+  try { const v = clamp(+$("#vol").value, 0, 100); if (muted && !alarmRinging) ytP.mute(); else { ytP.unMute(); ytP.setVolume(v); } } catch (e) {}
+}
+function ytTick() {
+  if (!ytP || !ytReady) return;
+  let st; try { st = ytP.getPlayerState(); } catch (e) { return; }
+  if (mode !== "yt") return;
+  if (typeof st === "number" && st !== ytState && ytCur) ytOnState({ data: st });   // bù cho sự kiện bị lỡ (ví dụ vừa quay lại tab)
+  const d = ytDurSec(), c = ytCurrentSec(), sk = $("#seek");
+  if (d > 0 && ytCur) ytCur.dur = d;
+  sk.disabled = !(d > 0);
+  if (!seeking && d > 0) { sk.value = Math.min(1000, c / d * 1000); fill(sk); }
+  $("#cur").textContent = fmt(c); $("#dur").textContent = fmt(d); miniProg(c, d);
+}
+function ytNetChanged(on) {
+  const n = $("#ytNet"); if (n) n.classList.toggle("hidden", on);
+  if (!on && mode === "yt" && ytPlaying()) setYtMsg("Mất kết nối mạng: video có thể dừng phát.", "bad");
+  else if (on && $("#ytMsg").textContent.indexOf("Mất kết nối") === 0) setYtMsg("");
+}
+function ytUiSync() {
+  const has = !!ytCur;
+  $("#ytBox").classList.toggle("empty-box", !has);
+  const tg = $("#ytToggle"); tg.textContent = ytPlaying() ? "Tạm dừng" : "Phát"; tg.disabled = !has;
+  $("#ytReload").disabled = !has;
+  const o = $("#ytOpen");
+  if (has) { o.href = ytCur.url; o.setAttribute("aria-disabled", "false"); } else { o.removeAttribute("href"); o.setAttribute("aria-disabled", "true"); }
+  const saved = has && ytLinks.some(l => l.videoId === ytCur.videoId), sv = $("#ytSave");
+  sv.textContent = saved ? "Đã lưu liên kết" : "Lưu liên kết"; sv.disabled = !has || saved;
+  $$("#ytList li.track").forEach(li => li.classList.toggle("on", has && li.dataset.vid === ytCur.videoId));
+}
+async function ytSaveLink(rec) {
+  if (ytLinks.some(l => l.videoId === rec.videoId)) return false;
+  if (db) { const r = await dbPutRecs("yt", [rec]); if (!r.ok) { toast(r.quota ? "Bộ nhớ trình duyệt đã đầy" : "Không lưu được liên kết"); return false; } } else warnNoDb();
+  ytLinks.unshift(rec); ytLinks.sort((a, b) => b.savedAt - a.savedAt); renderYtList(); miniUpdate();
+  return true;
+}
+async function ytSaveCur() {
+  if (!ytCur) return;
+  if (await ytSaveLink({ videoId: ytCur.videoId, url: ytCur.url, title: ytCur.name, savedAt: Date.now() })) toast("Đã lưu liên kết YouTube");
+  ytUiSync();
+}
+function ytDelete(id) { ytLinks = ytLinks.filter(l => l.videoId !== id); dbDel(id, "yt"); renderYtList(); ytUiSync(); miniUpdate(); }
+function renderYtList() {
+  const ul = $("#ytList"); if (!ul) return;
+  ul.textContent = "";
+  if (!ytLinks.length) { ul.appendChild(emptyState("Chưa có liên kết nào được lưu. Dán liên kết, phát video rồi bấm “Lưu liên kết”.")); return; }
+  ytLinks.forEach(l => {
+    const li = mkRow({ name: l.title || "Video YouTube", sub: "youtube.com · " + l.videoId, label: "Phát " + (l.title || l.videoId), onClick: () => ytLoad(l.videoId, { name: l.title }),
+      btns: [{ label: "Xóa liên kết", icon: trashIcon, fn: () => ytDelete(l.videoId) }] });
+    li.dataset.vid = l.videoId; ul.appendChild(li);
+  });
+  ytUiSync();
+}
+function ytSubmit() {
+  const inp = $("#ytUrl"), p = parseYoutubeUrl(inp.value);
+  if (p.error) { setYtMsg(p.error, "bad"); inp.setAttribute("aria-invalid", "true"); return; }
+  inp.removeAttribute("aria-invalid"); ytLoad(p.id, {});
+}
+function initYt() {
+  $("#ytGo").onclick = ytSubmit;
+  $("#ytUrl").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); ytSubmit(); } };
+  $("#ytUrl").oninput = () => { $("#ytUrl").removeAttribute("aria-invalid"); if ($("#ytMsg").classList.contains("bad")) setYtMsg(""); };
+  $("#ytToggle").onclick = () => { if (ytPlaying()) pauseAll(); else if (ytCur) { if (mode !== "yt") ytLoad(ytCur.videoId, { name: ytCur.name }); else ytResume(); } };
+  $("#ytReload").onclick = () => { if (ytCur) ytLoad(ytCur.videoId, { name: ytCur.name }); };
+  $("#ytSave").onclick = ytSaveCur;
+  $("#ytOpen").onclick = e => { if ($("#ytOpen").getAttribute("aria-disabled") === "true") e.preventDefault(); };
+  ytTimer = setInterval(ytTick, 500);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) ytTick(); });
+  window.addEventListener("pageshow", ytTick);
+  ytNetChanged(navigator.onLine); ytUiSync();
+}
+/* Rời tab YouTube: tạm dừng video vì trình phát phải đang hiển thị mới được phát */
+function tabShown(name, prev) {
+  if (prev === "yt" && name !== "yt" && ytPlaying()) { ytPause(); toast("Đã tạm dừng YouTube vì bạn rời tab YouTube (video chỉ phát khi trình phát đang hiển thị).", { ms: 5000 }); }
+  if (name === "fav") renderFavs();
+  if (name === "hist") renderHist();
+  if (name === "rec" && recDirty) renderRec();
+  const t = TABS.filter(x => x[0] === name)[0];
+  try { $(t[1]).scrollIntoView({ inline: "center", block: "nearest" }); } catch (e) {}
+}
+
+/* ================================================================
+   PHẦN 11 (v3): SAO LƯU / KHÔI PHỤC (JSON)
+   Định dạng: một file JSON hợp lệ; dòng đầu chứa phần đầu + `"tracks":[`, mỗi bài nằm trên một dòng riêng (Base64),
+   nhờ vậy khi khôi phục có thể đọc từng dòng, không phải nạp cả file vào RAM.
+   ================================================================ */
+let bkBusy = false, bkCancel = false, bkBlob = null, bkName = "", rsBusy = false, rsCancel = false, rsFile = null, rsInfo = null;
+const B64_SLICE = 3 * 1024 * 1024;                  // bội số của 3 để ghép Base64 từng đoạn vẫn đúng
+const MIME_BY_EXT = { mp3: "audio/mpeg", wav: "audio/wav", m4a: "audio/mp4", aac: "audio/aac", ogg: "audio/ogg", oga: "audio/ogg", opus: "audio/ogg", flac: "audio/flac", webm: "audio/webm" };
+const mimeFromName = n => MIME_BY_EXT[((String(n).match(/\.([a-z0-9]+)$/i) || [])[1] || "").toLowerCase()] || "audio/mpeg";
+const cleanMime = (m, n) => /^audio\/[a-z0-9.+-]+$/i.test(m || "") ? m : (m === "video/webm" ? m : mimeFromName(n));
+function readB64(blob) { return new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => { const s = String(fr.result); res(s.slice(s.indexOf(",") + 1)); }; fr.onerror = () => rej(fr.error || new Error("read")); fr.readAsDataURL(blob); }); }
+function b64ToBlob(b64, mime) {
+  const parts = [], CH = 4 * 1024 * 1024;
+  for (let i = 0; i < b64.length; i += CH) { const bin = atob(b64.slice(i, i + CH)), u = new Uint8Array(bin.length); for (let k = 0; k < bin.length; k++) u[k] = bin.charCodeAt(k); parts.push(u); }
+  return new Blob(parts, { type: mime });
+}
+function setText(sel, t, cls) { const e = $(sel); e.textContent = t; e.className = "status-line" + (cls ? " " + cls : ""); }
+function setBar(sel, frac) { $(sel).style.width = Math.max(0, Math.min(100, frac * 100)) + "%"; }
+/* Nơi ghi file: ghi thẳng ra đĩa nếu trình duyệt hỗ trợ (Chrome/Edge máy tính), ngược lại gom trong bộ nhớ */
+async function makeSink(filename) {
+  if (window.showSaveFilePicker) {
+    try {
+      const h = await window.showSaveFilePicker({ suggestedName: filename, types: [{ description: "Sao lưu Nguyễn Nhật Player", accept: { "application/json": [".json"] } }] });
+      const w = await h.createWritable();
+      return { stream: true, write: s => w.write(s), close: async () => { await w.close(); return null; }, abort: () => w.abort().catch(() => {}) };
+    } catch (e) { if (e && e.name === "AbortError") throw e; }
+  }
+  const parts = [];
+  return { stream: false, write: async s => { parts.push(s); }, close: async () => { const b = new Blob(parts, { type: "application/json" }); parts.length = 0; return b; }, abort: async () => { parts.length = 0; } };
+}
+const stationBk = s => ({ id: s.id, kind: s.kind, name: s.name, url: s.url, hls: !!s.hls, host: s.host || "", ord: s.ord, added: s.added });
+async function startBackup() {
+  if (bkBusy || rsBusy || adding) { toast("Đang có một tác vụ khác, hãy đợi hoàn tất"); return; }
+  const withAudio = $("#bkAudio").checked, stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-"), fname = "nguyen-nhat-player-" + stamp + ".json";
+  let sink;
+  try { sink = await makeSink(fname); } catch (e) { setText("#bkText", "Đã hủy chọn nơi lưu file."); return; }
+  bkBusy = true; bkCancel = false; bkBlob = null; bkName = fname;
+  $("#bkStart").disabled = true; $("#bkCancel").classList.remove("hidden"); $("#bkDone").classList.add("hidden"); $("#bkProg").classList.remove("hidden"); setBar("#bkBar", 0);
+  window.addEventListener("beforeunload", unloadGuard);
+  try {
+    setText("#bkText", "Đang chuẩn bị dữ liệu...");
+    for (const t of tracks) { if (!t.fp) await ensureFp(t); }
+    const total = withAudio ? tracks.reduce((s, t) => s + (t.size || (t.blob && t.blob.size) || 0), 0) : 0;
+    const head = { app: NN_APP, format: "nn-player-backup", formatVersion: BK_FORMAT, schemaVersion: DB_VERSION, createdAt: new Date().toISOString(), includesAudio: withAudio,
+      counts: { tracks: tracks.length, streams: stations.length, favorites: favs.size, history: hRecs.length, youtube: ytLinks.length, playlists: playlists.length, alarms: alarms.length },
+      settings: Object.assign({}, S), playlists, alarms, streams: stations.map(stationBk), favorites: Array.from(favs.values()), history: hRecs, youtube: ytLinks,
+      trackIndex: tracks.map(t => ({ id: t.id, name: t.name, fp: t.fp, folder: t.folder || "", size: t.size || 0 })) };
+    await sink.write(JSON.stringify(head).slice(0, -1) + ',"tracks":[\n');
+    let bytes = 0;
+    if (withAudio) for (let i = 0; i < tracks.length; i++) {
+      const t = tracks[i], blob = t.blob;
+      if (bkCancel) throw new Error("cancel");
+      const meta = { id: t.id, name: t.name, fp: t.fp, size: blob.size, path: t.path || "", folder: t.folder || "", dur: t.dur || 0, mime: cleanMime(blob.type, t.path || t.name) };
+      await sink.write(JSON.stringify(meta).slice(0, -1) + ',"data":"');
+      for (let off = 0; off < blob.size; off += B64_SLICE) {
+        if (bkCancel) throw new Error("cancel");
+        await sink.write(await readB64(blob.slice(off, off + B64_SLICE)));
+        bytes += Math.min(B64_SLICE, blob.size - off);
+        setBar("#bkBar", total ? bytes / total : (i + 1) / tracks.length);
+        setText("#bkText", "Đang đóng gói bài " + (i + 1) + "/" + tracks.length + " · " + fmtBytes(bytes) + (total ? " / " + fmtBytes(total) : ""));
+        await sleepMs(0);
+      }
+      await sink.write('"}' + (i < tracks.length - 1 ? "," : "") + "\n");
+    }
+    await sink.write("]}");
+    const blob = await sink.close();
+    setBar("#bkBar", 1);
+    const n = tracks.length, msg = (withAudio ? n + " bài (kèm âm thanh)" : "không kèm file nhạc") + ", " + stations.length + " đài, " + favs.size + " yêu thích, " + hRecs.length + " lịch sử, " + ytLinks.length + " liên kết YouTube";
+    if (sink.stream) setText("#bkText", "Đã ghi xong file " + fname + ": " + msg + ".", "ok");
+    else {
+      bkBlob = blob; $("#bkDone").classList.remove("hidden");
+      $("#bkShare").classList.toggle("hidden", !(navigator.canShare && navigator.canShare({ files: [new File([blob], fname, { type: "application/json" })] })));
+      setText("#bkText", "File sao lưu đã tạo xong (" + fmtBytes(blob.size) + "): " + msg + ". Bấm “Tải file sao lưu” để lưu.", "ok");
+    }
+  } catch (e) {
+    try { await sink.abort(); } catch (x) {}
+    const q = isQuota(e) || (e && (e.name === "RangeError" || /memory|allocation/i.test(String(e.message))));
+    if (e && e.message === "cancel") setText("#bkText", "Đã hủy sao lưu. Không có file nào được tạo.");
+    else { console.warn("[sao lưu]", e); setText("#bkText", q ? "Không đủ bộ nhớ hoặc dung lượng để tạo file sao lưu. Hãy bỏ chọn “Kèm file nhạc”, hoặc dùng Chrome/Edge trên máy tính để ghi thẳng ra đĩa." : "Sao lưu thất bại: " + (e && e.message || e) + ". Không có file hoàn chỉnh nào được tạo.", "bad"); }
+    $("#bkProg").classList.add("hidden");
+  }
+  window.removeEventListener("beforeunload", unloadGuard);
+  bkBusy = false; $("#bkStart").disabled = false; $("#bkCancel").classList.add("hidden");
+}
+function bkDownload() {
+  if (!bkBlob) return;
+  const url = URL.createObjectURL(bkBlob), a = document.createElement("a");
+  a.href = url; a.download = bkName; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
+async function bkShare() {
+  if (!bkBlob) return;
+  try { await navigator.share({ files: [new File([bkBlob], bkName, { type: "application/json" })], title: "Sao lưu Nguyễn Nhật Player" }); } catch (e) { if (e && e.name !== "AbortError") toast("Không mở được bảng chia sẻ, hãy dùng “Tải file sao lưu”."); }
+}
+/* Đọc file theo từng dòng (giải mã UTF-8 theo luồng) */
+async function readLines(file, onLine) {
+  const dec = new TextDecoder("utf-8"), CH = 4 * 1024 * 1024; let off = 0, carry = "", first = true;
+  while (off < file.size) {
+    carry += dec.decode(await file.slice(off, off + CH).arrayBuffer(), { stream: true }); off += CH;
+    let i;
+    while ((i = carry.indexOf("\n")) >= 0) { const line = carry.slice(0, i); carry = carry.slice(i + 1); first = false; if ((await onLine(line)) === false) return; }
+    if (first && carry.length > 64 * 1024 * 1024) throw new Error("File không đúng định dạng sao lưu.");
+  }
+  carry += dec.decode();
+  if (carry.length) await onLine(carry);
+}
+function validateHead(h) {
+  if (!h || typeof h !== "object" || Array.isArray(h)) throw new Error("Nội dung file không phải bản sao lưu.");
+  if (h.app !== NN_APP && h.format !== "nn-player-backup") throw new Error("File này không phải bản sao lưu của Nguyễn Nhật Player.");
+  if (typeof h.formatVersion !== "number" || h.formatVersion < 1) throw new Error("Không đọc được phiên bản định dạng của file sao lưu.");
+  if (h.formatVersion > BK_FORMAT) throw new Error("File sao lưu do phiên bản mới hơn tạo ra (định dạng " + h.formatVersion + "). Hãy cập nhật ứng dụng rồi thử lại.");
+  ["playlists", "alarms", "streams", "favorites", "history", "youtube", "trackIndex"].forEach(k => { if (h[k] != null && !Array.isArray(h[k])) throw new Error("Cấu trúc dữ liệu không hợp lệ ở mục “" + k + "”."); });
+  return true;
+}
+/* Đọc file sao lưu: onHead(header) kiểm tra phần đầu; onTrack(obj, err) gọi cho từng bài (trả về false để dừng). Không có onTrack thì chỉ đọc phần đầu. */
+async function parseBackup(file, o) {
+  let head = null, first = true, inline = false;
+  try {
+    await readLines(file, async line => {
+      if (first) {
+        first = false;
+        const s = line.replace(/^\uFEFF/, "").trim();
+        if (/"tracks":\s*\[$/.test(s)) head = JSON.parse(s + "]}");
+        else { head = JSON.parse(s); inline = true; }
+        if (o.onHead) o.onHead(head);
+        if (!o.onTrack || inline) return false;
+        return;
+      }
+      const x = line.trim(); if (!x || x === "]}" || x === "]") return;
+      let obj = null, err = null;
+      try { obj = JSON.parse(x.endsWith(",") ? x.slice(0, -1) : x); } catch (e) { err = e; }
+      if ((await o.onTrack(obj, err)) === false) return false;
+    });
+  } catch (e) { if (e instanceof SyntaxError) throw new Error("File JSON bị hỏng hoặc sai định dạng."); throw e; }
+  if (inline && o.onTrack && Array.isArray(head.tracks)) { for (const t of head.tracks) { if ((await o.onTrack(t, null)) === false) break; } }
+  return head;
+}
+async function rsChoose(file) {
+  rsFile = null; rsInfo = null; $("#rsInfo").classList.add("hidden"); $("#rsResult").textContent = ""; $("#rsProg").classList.add("hidden");
+  if (!file) return;
+  setText("#rsText", "Đang kiểm tra file sao lưu...");
+  try {
+    let ok = 0, bad = 0, bytes = 0;
+    const head = await parseBackup(file, { onHead: validateHead, onTrack: async o => { if (!o || typeof o.name !== "string" || typeof o.data !== "string") bad++; else { ok++; bytes += +o.size || 0; } } });
+    rsFile = file; rsInfo = { head, ok, bad, bytes };
+    const c = head.counts || {}, n = a => Array.isArray(a) ? a.length : 0;
+    $("#rsSummary").textContent = "Tạo lúc " + (head.createdAt ? new Date(head.createdAt).toLocaleString("vi-VN") : "không rõ") + ". " +
+      (head.includesAudio ? ok + " bài có âm thanh (" + fmtBytes(bytes) + (bad ? ", " + bad + " bài lỗi" : "") + ")" : "Không kèm file nhạc") + " · " + n(head.streams) + " đài · " + n(head.favorites) + " yêu thích · " + n(head.history) + " lịch sử · " +
+      n(head.youtube) + " liên kết YouTube · " + n(head.playlists) + " danh sách phát · " + n(head.alarms) + " báo thức.";
+    $("#rsTracks").checked = !!head.includesAudio && ok > 0; $("#rsTracks").disabled = !(head.includesAudio && ok > 0);
+    $("#rsInfo").classList.remove("hidden");
+    setText("#rsText", "File hợp lệ. Chọn mục cần khôi phục rồi bấm “Bắt đầu khôi phục”.", "ok");
+  } catch (e) { setText("#rsText", e.message || "Không đọc được file.", "bad"); }
+}
+const normFavKey = (f, idToFp) => {                 // chuẩn hóa khóa nhạc cục bộ về dạng "l:<fp>"
+  if (f.type !== "local") return f.key;
+  let fp = f.fp || (String(f.key).indexOf("l:id:") === 0 ? idToFp.get(+String(f.key).slice(5)) : String(f.key).slice(2));
+  return fp ? "l:" + fp : "";
+};
+async function startRestore() {
+  if (!rsFile || !rsInfo || rsBusy || bkBusy || adding) return;
+  const opt = { tracks: $("#rsTracks").checked, streams: $("#rsStreams").checked, favs: $("#rsFavs").checked, hist: $("#rsHist").checked, yt: $("#rsYt").checked, pl: $("#rsPl").checked, alarms: $("#rsAlarms").checked, settings: $("#rsSettings").checked };
+  if (opt.settings && !confirm("Khôi phục cài đặt sẽ GHI ĐÈ âm lượng, EQ và các tùy chọn phát hiện tại. Tiếp tục?")) return;
+  if (!confirm("Khôi phục theo chế độ GỘP: dữ liệu hiện có được giữ nguyên, chỉ thêm mục còn thiếu và bỏ qua bài trùng. Bắt đầu?")) return;
+  rsBusy = true; rsCancel = false; $("#rsStart").disabled = true; $("#rsCancel").classList.remove("hidden"); $("#rsProg").classList.remove("hidden"); setBar("#rsBar", 0); $("#rsResult").textContent = "";
+  window.addEventListener("beforeunload", unloadGuard);
+  const R = { tracks: [0, 0, 0], streams: [0, 0, 0], favs: [0, 0, 0], hist: [0, 0, 0], yt: [0, 0, 0], pl: [0, 0, 0], alarms: [0, 0, 0] }, notes = [];   // [thành công, trùng, lỗi]
+  const head = rsInfo.head, idToFp = new Map(), streamMap = new Map();
+  (head.trackIndex || []).forEach(x => { if (x && x.id != null && x.fp) idToFp.set(+x.id, x.fp); });
+  const step = async (name, fn) => { try { await fn(); } catch (e) { console.warn("[khôi phục " + name + "]", e); notes.push("Lỗi khi khôi phục " + name + ": " + (e && e.message || e)); } };
+  try {
+    setText("#rsText", "Đang khôi phục dữ liệu nhỏ...");
+    if (opt.streams) await step("đài radio", async () => {
+      for (const s of head.streams || []) {
+        if (!s || typeof s.url !== "string" || typeof s.name !== "string") { R.streams[2]++; continue; }
+        const p = parseStreamUrl(s.url); if (p.error) { R.streams[2]++; continue; }
+        const ex = stations.find(x => x.url === p.url || x.url === s.url);
+        if (ex) { R.streams[1]++; streamMap.set(s.id, ex.id); continue; }
+        const r = await addStation({ kind: s.kind === "file" ? "file" : "live", name: s.name.slice(0, 60), url: p.url, hls: !!s.hls, host: String(s.host || p.u.hostname) });
+        if (r) { R.streams[0]++; streamMap.set(s.id, r.id); } else R.streams[2]++;
+      }
+    });
+    if (opt.yt) await step("liên kết YouTube", async () => {
+      for (const l of head.youtube || []) {
+        if (!l || !YT_ID.test(String(l.videoId))) { R.yt[2]++; continue; }
+        if (ytLinks.some(x => x.videoId === l.videoId)) { R.yt[1]++; continue; }
+        (await ytSaveLink({ videoId: l.videoId, url: "https://www.youtube.com/watch?v=" + l.videoId, title: String(l.title || "Video YouTube").slice(0, 200), savedAt: +l.savedAt || Date.now() })) ? R.yt[0]++ : R.yt[2]++;
+      }
+    });
+    if (opt.favs) await step("yêu thích", async () => {
+      const add = [];
+      for (const f of head.favorites || []) {
+        if (!f || typeof f.name !== "string" || ["local", "stream", "youtube"].indexOf(f.type) < 0 || typeof f.key !== "string") { R.favs[2]++; continue; }
+        const key = normFavKey(f, idToFp);
+        if (!key) { R.favs[2]++; continue; }
+        if (favs.has(key) || add.some(x => x.key === key)) { R.favs[1]++; continue; }
+        add.push({ key, type: f.type, name: f.name.slice(0, 200), folder: String(f.folder || ""), addedAt: +f.addedAt || Date.now(), fp: f.type === "local" ? key.slice(2) : "", url: String(f.url || ""), videoId: String(f.videoId || ""), kind: String(f.kind || ""), hls: !!f.hls, host: String(f.host || "") });
+      }
+      if (add.length) { if (db) { const r = await dbPutRecs("favorites", add); if (!r.ok) throw new Error(r.quota ? "bộ nhớ đầy" : "không ghi được"); } add.forEach(a => favs.set(a.key, a)); R.favs[0] += add.length; }
+      favSync(); renderFavs();
+    });
+    if (opt.hist) await step("lịch sử", async () => {
+      const seen = new Set(hRecs.map(h => h.key + "|" + h.ts)), add = [];
+      for (const h of head.history || []) {
+        if (!h || typeof h.name !== "string" || typeof h.key !== "string" || typeof h.ts !== "number" || ["local", "stream", "youtube"].indexOf(h.type) < 0) { R.hist[2]++; continue; }
+        const key = normFavKey(h, idToFp);
+        if (!key) { R.hist[2]++; continue; }
+        if (seen.has(key + "|" + h.ts)) { R.hist[1]++; continue; }
+        seen.add(key + "|" + h.ts);
+        add.push({ key, type: h.type, name: h.name.slice(0, 200), folder: String(h.folder || ""), source: srcLabel(h.type), ts: h.ts, listened: +h.listened || 0, url: String(h.url || ""), videoId: String(h.videoId || ""), kind: String(h.kind || ""), hls: !!h.hls, host: String(h.host || ""), fp: h.type === "local" ? key.slice(2) : "" });
+      }
+      if (add.length) {
+        if (db) { const r = await dbAdd("history", add); if (!r.ok) throw new Error(r.quota ? "bộ nhớ đầy" : "không ghi được"); add.forEach((a, i) => { a.id = r.ids[i]; }); } else add.forEach(a => { a.id = --memId; });
+        hRecs = hRecs.concat(add).sort((a, b) => b.ts - a.ts);
+        if (hRecs.length > HIST_MAX) { hRecs.length = HIST_MAX; dbTrimHistory(HIST_MAX); }
+        R.hist[0] += add.length;
+      }
+      renderHist();
+    });
+    if (opt.pl) await step("danh sách phát", async () => {
+      for (const p of head.playlists || []) {
+        if (!p || typeof p.id !== "string" || !Array.isArray(p.keys)) { R.pl[2]++; continue; }
+        const keys = p.keys.map(k => { k = String(k); return /^\d+$/.test(k) && idToFp.has(+k) ? idToFp.get(+k) : k; }), ex = plById(p.id);
+        if (ex) { let ch = false; keys.forEach(k => { if (ex.keys.indexOf(k) < 0) { ex.keys.push(k); ch = true; } }); ch ? R.pl[0]++ : R.pl[1]++; }
+        else if (playlists.length >= 30) R.pl[2]++;
+        else { playlists.push({ id: p.id, name: String(p.name || "Danh sách").slice(0, 40), keys }); R.pl[0]++; }
+      }
+      savePl(); renderPlaylists(); if (plView) renderPlDetail();
+    });
+    if (opt.alarms) await step("báo thức", async () => {
+      for (const a0 of head.alarms || []) {
+        const a = cleanAlarm(a0);
+        if (alarms.some(x => x.id === a.id)) { R.alarms[1]++; continue; }
+        if (alarms.length >= MAX_ALARMS) { R.alarms[2]++; continue; }
+        if (a.source.type === "stream") { const m = streamMap.get(a.source.streamId); if (m != null) a.source.streamId = m; else if (!stations.some(x => x.id === a.source.streamId)) a.source.type = "beep"; }
+        if (a.source.type === "track" && /^\d+$/.test(a.source.trackKey) && idToFp.has(+a.source.trackKey)) a.source.trackKey = idToFp.get(+a.source.trackKey);
+        a.nextAt = a.enabled ? computeNextAt(a, Date.now()) : 0; a.snoozeAt = 0;
+        alarms.push(a); R.alarms[0]++;
+      }
+      saveAlarms();
+    });
+    if (opt.settings && head.settings && typeof head.settings === "object") await step("cài đặt", async () => {
+      ["vol", "muted", "shuffle", "repeat", "norm", "xf", "xfSec", "bass", "treble", "space", "eqOn", "eq", "keepAlive"].forEach(k => { if (k in head.settings) S[k] = head.settings[k]; });
+      lsSet(SKEY, S); notes.push("Đã khôi phục cài đặt, hãy tải lại ứng dụng để áp dụng đầy đủ.");
+    });
+    if (opt.tracks && head.includesAudio) await step("nhạc", async () => {
+      let done = 0;
+      await parseBackup(rsFile, { onTrack: async (o, err) => {
+        if (rsCancel) { notes.push("Đã hủy: phần đã khôi phục được giữ lại."); return false; }
+        done++;
+        if (err || !o || typeof o.name !== "string" || typeof o.data !== "string") { R.tracks[2]++; return; }
+        let blob; try { blob = b64ToBlob(o.data, cleanMime(o.mime, o.path || o.name)); } catch (e) { R.tracks[2]++; return; }
+        if (+o.size && blob.size !== +o.size) { R.tracks[2]++; return; }
+        let fp = ""; try { fp = await fingerprint(blob); } catch (e) {}
+        if (!fp || (o.fp && o.fp !== fp)) { R.tracks[2]++; return; }                 // dữ liệu hỏng: không ghi
+        if (fpSet.has(fp)) { R.tracks[1]++; }
+        else {
+          const rec = { name: o.name.slice(0, 200), blob, fp, size: blob.size, path: String(o.path || ""), folder: String(o.folder || "") };
+          if (+o.dur > 0) { rec.dur = +o.dur; rec.dv = 2; }
+          let id = null;
+          if (db) {
+            const r = await dbPutMany([rec]);
+            if (!r.ok) { if (r.quota) { notes.push("Bộ nhớ trình duyệt đã đầy, dừng khôi phục nhạc."); return false; } R.tracks[2]++; return; }
+            id = r.ids[0];
+          } else warnNoDb();
+          const from = tracks.length; mkTrack(rec, id); fpSet.add(fp); registerNew(from); R.tracks[0]++;
+          renderList(); if (pos < 0 && mode === "lib") showFirst(); pumpMeta();
+        }
+        setBar("#rsBar", rsInfo.ok ? done / rsInfo.ok : 1); setText("#rsText", "Đang khôi phục nhạc " + done + "/" + rsInfo.ok + "...");
+        await sleepMs(0);
+      } });
+    });
+    setBar("#rsBar", 1); setText("#rsText", "Khôi phục xong.", "ok");
+  } catch (e) { console.warn("[khôi phục]", e); setText("#rsText", "Khôi phục dừng giữa chừng: " + (e && e.message || e), "bad"); }
+  const L = (n, a) => a[0] + a[1] + a[2] ? n + ": " + a[0] + " thành công, " + a[1] + " trùng bỏ qua, " + a[2] + " lỗi" : "";
+  const box = $("#rsResult"); box.textContent = "";
+  [L("Nhạc", R.tracks), L("Đài radio", R.streams), L("Yêu thích", R.favs), L("Lịch sử", R.hist), L("YouTube", R.yt), L("Danh sách phát", R.pl), L("Báo thức", R.alarms)].concat(notes).filter(Boolean).forEach(t => { const d = document.createElement("div"); d.textContent = t; box.appendChild(d); });
+  window.removeEventListener("beforeunload", unloadGuard);
+  rsBusy = false; $("#rsStart").disabled = false; $("#rsCancel").classList.add("hidden");
+  updateStorage(); libChanged();
+}
+function dbInfoRender() {
+  const n = $("#bkDb"); if (!n) return;
+  n.textContent = db ? "Kho dữ liệu: phiên bản " + dbInfo.version + (dbInfo.created.length ? ". Lần mở này đã thêm kho mới: " + dbInfo.created.join(", ") + " (kho nhạc và radio cũ giữ nguyên)." : ". Không cần nâng cấp.") : "Không mở được kho dữ liệu của trình duyệt: nhạc sẽ không được lưu.";
+}
+function initBackup() {
+  $("#backupBtn").onclick = () => { dbInfoRender(); openSheet("#sheetBackup", $("#backupBtn")); };
+  $("#bkStart").onclick = startBackup; $("#bkCancel").onclick = () => { bkCancel = true; };
+  $("#bkDownload").onclick = bkDownload; $("#bkShare").onclick = bkShare;
+  $("#rsPick").onclick = () => $("#rsFile").click();
+  $("#rsFile").onchange = e => { const f = e.target.files[0]; e.target.value = ""; rsChoose(f); };
+  $("#rsStart").onclick = startRestore; $("#rsCancel").onclick = () => { rsCancel = true; };
+}
+/* Nạp dữ liệu của các kho mới sau khi database đã mở */
+async function loadExtras() {
+  if (db) {
+    const fv = await dbGetAll("favorites"); if (fv) fv.forEach(f => favs.set(f.key, f));
+    const hs = await dbGetAll("history"); if (hs) { hRecs = hs.sort((a, b) => b.ts - a.ts); if (hRecs.length > HIST_MAX) { hRecs.length = HIST_MAX; dbTrimHistory(HIST_MAX); } }
+    const yl = await dbGetAll("yt"); if (yl) ytLinks = yl.sort((a, b) => b.savedAt - a.savedAt);
+  }
+  renderFavs(); renderHist(); renderRec(); renderYtList(); favSync(); ytUiSync(); miniUpdate(); dbInfoRender();
 }
 
 boot();
